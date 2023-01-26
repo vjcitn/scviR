@@ -1,0 +1,43 @@
+---
+title: "scvi-tools CITE-seq tutorial in R"
+author: "Follows scvi-tools doc, Gayoso, Steier et al."
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+```{r lk1}
+library(scviR)
+scvi = scviR()
+adata = scvi$data$pbmcs_10x_cite_seq() # to current disk
+```
+
+Not clear how to do the following in R.
+```{python try1}
+r.adata.layers["counts"] = r.adata.X.copy()
+```
+Might as well keep going.
+```{python try2}
+import scanpy as sc   # note scanpyR() can be used
+sc.pp.normalize_total(r.adata, target_sum=1e4)
+sc.pp.log1p(r.adata)
+r.adata.raw = r.adata
+#
+sc.pp.highly_variable_genes(
+    r.adata, 
+    n_top_genes=4000, 
+    flavor="seurat_v3",
+    batch_key="batch", 
+    subset=True,
+    layer="counts"
+)
+r.adata
+```
