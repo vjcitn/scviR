@@ -63,3 +63,29 @@ cache_citeseq_tutvae = function() {
 # 51842190 demo1.h5ad.gz
 # 16477930 vae1_ov.zip
 #st
+
+#' helper to get the tutorial VAE for PBMCs from scvi-tools tutorial
+#' @examples
+#' get_citeseq_tutvae()
+#' @export
+get_citeseq_tutvae = function() {
+   zpath = cache_citeseq_tutvae()
+   td = tempdir()
+   unzip(zpath, exdir=td)
+   vaedir = paste0(td, "/vae1_ov")
+   scvi = scviR()
+   adm = anndataR()
+   hpath = cache_citeseq_pbmcs()
+   adata = adm$read(hpath)
+   mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=FALSE)
+   mod
+}
+
+#' helper to get the processed anndata for CITE-seq PBMCs from scvi-tools tutorial
+#' @examples
+#' get_citeseq_pbmcs()
+#' @export
+get_citeseq_pbmcs = function() {
+   h5path = cache_citeseq_pbmcs()
+   anndataR()$read(h5path)
+}

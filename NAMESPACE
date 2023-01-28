@@ -3,6 +3,8 @@
 export(anndataR)
 export(cache_citeseq_pbmcs)
 export(cache_citeseq_tutvae)
+export(get_citeseq_pbmcs)
+export(get_citeseq_tutvae)
 export(scanpyR)
 export(scviR)
 import(BiocFileCache)
