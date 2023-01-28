@@ -13,7 +13,7 @@ Description: experimental inferface from R to scvi-tools
 License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 4.2), dplyr, basilisk
-Imports: reticulate
+Imports: reticulate, BiocFileCache
 Suggests: knitr, testthat
 VignetteBuilder: knitr
 biocViews: Infrastructure
