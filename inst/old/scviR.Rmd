@@ -1,0 +1,130 @@
+---
+title: "scvi-tools CITE-seq tutorial in R"
+author: "Follows scvi-tools doc, Gayoso, Steier et al."
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Overview
+
+As of Jan 27 2023, the [scvi-tools](https://scvi-tools.org/) is
+an element of the [scverse](https://scverse.org/) toolchest for
+single-cell omics data analysis.
+
+The scviR package is a very elementary approach to interfacing
+between R, Bioconductor and scvi-tools.  
+
+- A particular concern is
+the rapidity of development of scvi-tools components; we are
+using [basilisk](https://bioconductor.org/packages/basilisk)
+to manage R/python interoperation, and as of current
+writing we work with version 0.18.0 of scvi-tools.  Specific
+versions of python components are enumerated in the file R/basilisk.R.
+- We have found it useful to use both R and python in our
+overview vignette, which renders nicely with Rstudio 2022.12.0 Build 353.
+- We have had difficulty achieving GPU connectivity
+with a number of platforms.  A docker container built on
+the [NVIDIA Merlin PyTorch](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/merlin/containers/merlin-pytorch) base is available, which includes
+R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.18.0
+and scviR 0.0.1.  There is no Dockerfile at this time.
+
+
+# A CITE-seq example
+
+The following code retrieves two anndata files
+over the web and drops them in a newly created
+folder `./data` relative to the vignette executing
+folder.  There is a total of 42 MB of CITE-seq
+data retrieved.  [N.B. This process would not be
+allowed in a Bioconductor package, but an ExperimentHub
+instance should be created and used.]
+
+## Acquisition of example data
+
+```{r lk1}
+library(scviR)
+scvi = scviR()
+adata = scvi$data$pbmcs_10x_cite_seq() # to current ./data folder
+```
+
+## Preprocessing 
+
+It is not clear how to do the following operation
+with `layers["counts"]` in R so we bridge to
+python, taking advantage of quarto.
+```{python try1}
+r.adata.layers["counts"] = r.adata.X.copy()
+```
+We keep going with python to carry out basic
+preprocessing with scanpy.
+```{python try2}
+import scanpy as sc   # note scanpyR() can be used
+sc.pp.normalize_total(r.adata, target_sum=1e4)
+sc.pp.log1p(r.adata)
+r.adata.raw = r.adata
+#
+sc.pp.highly_variable_genes(
+    r.adata, 
+    n_top_genes=4000, 
+    flavor="seurat_v3",
+    batch_key="batch", 
+    subset=True,
+    layer="counts"
+)
+r.adata
+```
+
+We'll continue with the tutorial workflow.  The
+steps just shown do not take much time, and the download
+is not repeated -- the scvi code checks for the contents
+of the `./data` folder.
+
+## Gene filtering
+
+```{python filt}
+sc.pp.highly_variable_genes(
+    r.adata, 
+    n_top_genes=4000, 
+    flavor="seurat_v3",
+    batch_key="batch", 
+    subset=True,
+    layer="counts"
+)
+```
+
+## Setup and VAE fitting
+
+
+```{python dofit}
+r.scvi.model.TOTALVI.setup_anndata(
+    r.adata, 
+    protein_expression_obsm_key="protein_expression",
+    layer="counts", 
+    batch_key="batch"
+)
+vae = r.scvi.model.TOTALVI(r.adata, latent_distribution="normal")
+r.adata.write("demo1.h5ad")
+```
+
+This step can take up to 40 minutes.
+
+```{python fitvae,eval=FALSE, message=FALSE}
+vae.train()
+vae.save("vae1_ov")
+vae
+```
+
+A saved version of the VAE can be restored.
+```{python dorest, message=FALSE}
+pvae = r.scvi.model._totalvi.TOTALVI.load("vae1_ov", r.adata, use_gpu=False)
+pvae
+```
