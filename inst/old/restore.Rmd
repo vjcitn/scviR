@@ -1,0 +1,44 @@
+---
+title: "abc"
+---
+```{python chk}
+import scvi
+import anndata
+import matplotlib.pyplot as plt
+adata = anndata.read("./demo1.h5ad")
+```
+That h5ad seems to lack basic material from totalVI.
+```{python chk2}
+vae = scvi.model._totalvi.TOTALVI.load("vae1_ov", adata, use_gpu=False)
+vae
+```
+
+```{python lkelb, eval=FALSE}
+plt.plot(vae.history["elbo_train"], label="train")
+plt.plot(vae.history["elbo_validation"], label="validation")
+plt.title("Negative ELBO over training epochs")
+plt.ylim(1200, 1400)
+plt.legend()
+```
+
+```{python contin}
+adata.obsm["X_totalVI"] = vae.get_latent_representation()
+
+rna, protein = vae.get_normalized_expression(
+    n_samples=25, 
+    return_mean=True, 
+    transform_batch=["PBMC10k", "PBMC5k"]
+)
+
+adata.layers["denoised_rna"], adata.obsm["denoised_protein"] = rna, protein
+
+adata.obsm["protein_foreground_prob"] = vae.get_protein_foreground_probability(
+    n_samples=25, 
+    return_mean=True, 
+    transform_batch=["PBMC10k", "PBMC5k"]
+)
+parsed_protein_names = [p.split("_")[0] for p in adata.obsm["protein_expression"].columns]
+adata.obsm["protein_foreground_prob"].columns = parsed_protein_names
+adata
+adata.write("postVI1.h5ad")
+```

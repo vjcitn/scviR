@@ -1,5 +1,5 @@
 ---
-title: "scvi-tools CITE-seq tutorial in R"
+title: "scvi-tools CITE-seq tutorial in R: from data download to fitting a VAE"
 author: "Follows scvi-tools doc, Gayoso, Steier et al."
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 vignette: >
@@ -23,8 +23,7 @@ single-cell omics data analysis.
 The scviR package is a very elementary approach to interfacing
 between R, Bioconductor and scvi-tools.  
 
-- A particular concern is
-the rapidity of development of scvi-tools components; we are
+- scvi-tools components develop rapidly; we are
 using [basilisk](https://bioconductor.org/packages/basilisk)
 to manage R/python interoperation, and as of current
 writing we work with version 0.18.0 of scvi-tools.  Specific
@@ -32,21 +31,31 @@ versions of python components are enumerated in the file R/basilisk.R.
 - We have found it useful to use both R and python in our
 overview vignette, which renders nicely with Rstudio 2022.12.0 Build 353.
 - We have had difficulty achieving GPU connectivity
-with a number of platforms.  A docker container built on
-the [NVIDIA Merlin PyTorch](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/merlin/containers/merlin-pytorch) base is available, which includes
+with a number of platforms.  A docker container based on a PyTorch-oriented image in
+the [NVIDIA container registry](nvcr.io/nvidia/pytorch:22.12-py3)
 R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.18.0
-and scviR 0.0.1.  There is no Dockerfile at this time.
+and scviR 0.0.1.  A Dockerfile is in scviR/inst/Docker.
 
 
 # A CITE-seq example
 
-The following code retrieves two anndata files
-over the web and drops them in a newly created
+The following code retrieves two _preprocessed_ anndata files
+from a YosefLab GitHub repository and drops them in a newly created
 folder `./data` relative to the vignette executing
 folder.  There is a total of 42 MB of CITE-seq
 data retrieved.  [N.B. This process would not be
 allowed in a Bioconductor package, but an ExperimentHub
 instance should be created and used.]
+
+The details of production of the anndata instances that are downloaded
+are available in
+```
+https://github.com/scverse/scvi-tools/blob/0.18.x/scvi/data/_built_in_data/_cite_seq.py
+```
+which refers to
+```
+https://github.com/YosefLab/totalVI_reproducibility/blob/master/data/data_filtering_scripts/pbmc_10k/pbmc_10k.py```
+that gives all the code for doublet detection and outlier handling.
 
 ## Acquisition of example data
 
@@ -71,15 +80,6 @@ import scanpy as sc   # note scanpyR() can be used
 sc.pp.normalize_total(r.adata, target_sum=1e4)
 sc.pp.log1p(r.adata)
 r.adata.raw = r.adata
-#
-sc.pp.highly_variable_genes(
-    r.adata, 
-    n_top_genes=4000, 
-    flavor="seurat_v3",
-    batch_key="batch", 
-    subset=True,
-    layer="counts"
-)
 r.adata
 ```
 
@@ -115,7 +115,7 @@ vae = r.scvi.model.TOTALVI(r.adata, latent_distribution="normal")
 r.adata.write("demo1.h5ad")
 ```
 
-This step can take up to 40 minutes.
+This step can take up to 40 minutes when no GPU is available.
 
 ```{python fitvae,eval=FALSE, message=FALSE}
 vae.train()
@@ -127,4 +127,9 @@ A saved version of the VAE can be restored.
 ```{python dorest, message=FALSE}
 pvae = r.scvi.model._totalvi.TOTALVI.load("vae1_ov", r.adata, use_gpu=False)
 pvae
+```
+The structure of the autoencoder:
+
+```{python look}
+pvae.module
 ```
