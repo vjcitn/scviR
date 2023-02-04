@@ -2,15 +2,15 @@
 #' @import BiocFileCache
 #' @note Original h5ad files obtained using scvi-tools 0.18.0 scvi.data.pbmcs_10x_cite_seq,
 #' then processed according to steps in the scviR vignette, which follow the
-#' scvi-tools tutorial by Gayoso et al.
+#' [scvi-tools tutorial](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb) by Gayoso et al.
 #' @return invisibly, the path to the .h5ad file
 #' @examples
-#' h5path = cache_citeseq_pbmcs()
+#' h5path = cache_citeseq_5k10k_pbmcs()
 #' cmeta = rhdf5::h5ls(h5path)
 #' dim(cmeta)
 #' head(cmeta, 17)
 #' @export
-cache_citeseq_pbmcs = function() {
+cache_citeseq_5k10k_pbmcs = function() {
   ca = BiocFileCache()
   pa = bfcquery(ca, "demo1.h5ad")
 # returns tibble
@@ -31,18 +31,18 @@ cache_citeseq_pbmcs = function() {
 #' `https://docs.scvi-tools.org/en/stable/tutorials/notebooks/totalVI.html`.
 #' @return invisibly, the path to the .zip file holding the fitted VAE and associated data
 #' @examples
-#' zpath = cache_citeseq_tutvae()
+#' zpath = cache_citeseq_5k10k_tutvae()
 #' td = tempdir()
 #' unzip(zpath, exdir=td)
 #' vaedir = paste0(td, "/vae1_ov")
 #' scvi = scviR()
 #' adm = anndataR()
-#' hpath = cache_citeseq_pbmcs()
+#' hpath = cache_citeseq_5k10k_pbmcs()
 #' adata = adm$read(hpath)
 #' mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=FALSE)
 #' mod
 #' @export
-cache_citeseq_tutvae = function() {
+cache_citeseq_5k10k_tutvae = function() {
   ca = BiocFileCache()
   pa = bfcquery(ca, "vae1_ov.zip")
 # returns tibble
@@ -69,13 +69,13 @@ cache_citeseq_tutvae = function() {
 #' get_citeseq_tutvae()
 #' @export
 get_citeseq_tutvae = function() {
-   zpath = cache_citeseq_tutvae()
+   zpath = cache_citeseq_5k10k_tutvae()
    td = tempdir()
    unzip(zpath, exdir=td)
    vaedir = paste0(td, "/vae1_ov")
    scvi = scviR()
    adm = anndataR()
-   hpath = cache_citeseq_pbmcs()
+   hpath = cache_citeseq_5k10k_pbmcs()
    adata = adm$read(hpath)
    mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=FALSE)
    mod
@@ -83,10 +83,10 @@ get_citeseq_tutvae = function() {
 
 #' helper to get the processed anndata for CITE-seq PBMCs from scvi-tools tutorial
 #' @examples
-#' get_citeseq_pbmcs()
+#' get_citeseq_5k10k_pbmcs()
 #' @export
-get_citeseq_pbmcs = function() {
-   h5path = cache_citeseq_pbmcs()
+get_citeseq_5k10k_pbmcs = function() {
+   h5path = cache_citeseq_5k10k_pbmcs()
    anndataR()$read(h5path)
 }
 
