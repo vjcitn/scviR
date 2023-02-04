@@ -29,13 +29,16 @@ to manage R/python interoperation, and as of current
 writing we work with version 0.18.0 of scvi-tools.  Specific
 versions of python components are enumerated in the file R/basilisk.R.
 - We have found it useful to use both R and python in our
-developmental vignettes, which render nicely with Rstudio 2022.12.0 Build 353.
+developmental vignettes, which render nicely with Rstudio 2022.12.0 Build 353
+and beyond.
 - A docker container based on a PyTorch-oriented image in
 the [NVIDIA container registry](nvcr.io/nvidia/pytorch:22.12-py3) includes
 R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.18.0
 and scviR 0.0.1.  A Dockerfile is in scviR/inst/Docker;
 `vjcitn/nvidpt_bioc:0.0.1` can be pulled from dockerhub, it reports
 size 26.5GB.
+- Code presented here follows [the colab vignette
+for scvi-tools 0.18.0](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb).
 
 
 # A CITE-seq example
@@ -48,7 +51,7 @@ CITE-seq experiments from the scvi-tools data repository.
 
 ```{r doinit}
 library(scviR)
-adref = get_citeseq_pbmcs()
+adref = get_citeseq_5k10k_pbmcs()
 adref
 ```
 
@@ -74,15 +77,70 @@ This is quite voluminous and is provided in an appendix.
 ```{r lkelb}
 h = vae$history
 npts = nrow(h$elbo_train)
-plot(seq_len(npts), as.numeric(h$elbo_train[[1]]), ylim=c(1200,1400), type="l", col="blue")
+plot(seq_len(npts), as.numeric(h$elbo_train[[1]]), ylim=c(1200,1400), 
+  type="l", col="blue", main="Negative ELBO over training epochs")
 lines(seq_len(npts), as.numeric(h$elbo_validation[[1]]), type="l", col="orange")
 ```
 
 ## Normalized quantities
 
-```{r getn}
+On a CPU, the following can take a long time.
+```{r getn, eval=FALSE}
 NE = vae$get_normalized_expression(n_samples=25L, 
     return_mean=TRUE, 
     transform_batch=c("PBMC10k", "PBMC5k")
 )
 ```
+We provide the totalVI-based denoised quantities in
+```{r getdenoise}
+denoised = get_totalVI_normalized_5k10k()
+vapply(denoised, dim, integer(2))
+```
+Note that these have features as columns, samples (cells)
+as rows.
+```{r lkn}
+head(colnames(denoised$rna_nmlzd))
+head(colnames(denoised$prot_nmlzd))
+```
+
+## UMAP projection of Leiden clustering in the totalVI latent space
+
+We have stored a fully loaded anndata instance for retrieval
+to inspect the latent space and clustering produced
+by the tutorial notebook procedure.  The images produced here
+do not agree exactly with what I see in the colab pages for
+0.18.0 and 0.19.0.  The process was run in Jetstream2, not in colab.
+
+```{r getproj}
+full = get_totalVI_5k10k_adata()
+# class distribution
+cllabs = suppressWarnings(full$obs$leiden_totalVI)
+blabs = suppressWarnings(full$obs$batch)
+table(cllabs)
+um = full$obsm$get("X_umap") 
+dd = data.frame(umap1=um[,1], umap2=um[,2], clust=cllabs, batch=blabs)
+library(ggplot2)
+ggplot(dd, aes(x=umap1, y=umap2, colour=factor(cllabs))) + geom_point(size=.05)
+```
+
+Effectiveness at accommodating the two-batch design is suggested by the
+mixed representation of the batches in all the Leiden clusters.
+```{r getba}
+ggplot(dd, aes(x=umap1, y=umap2, colour=factor(batch))) + geom_point(size=.05)
+```
+
+## Protein abundances in projected clusters
+
+We focus on four of the ADT.
+
+```{r lknn,fig.width=8}
+pro4 = denoised$prot_nmlzd[,1:4]
+names(pro4) = gsub("_.*", "", names(pro4))
+library(reshape2)
+wprot = cbind(dd, pro4)
+mm = melt(wprot, id.vars=c("clust", "batch", "umap1", "umap2"))
+head(mm,3)
+ggplot(mm, aes(x=umap1, y=umap2, colour=log1p(value))) + 
+   geom_point(size=.1) + facet_grid(.~variable)
+```
+
