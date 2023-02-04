@@ -89,3 +89,66 @@ get_citeseq_pbmcs = function() {
    h5path = cache_citeseq_pbmcs()
    anndataR()$read(h5path)
 }
+
+.osn_bucket_to_cache = function(entity, folder="BiocScviR",
+    prefix="https://mghp.osn.xsede.org/bir190004-bucket01/",
+    ca = BiocFileCache::BiocFileCache()) {
+    pa = bfcquery(ca, entity)
+    if (nrow(pa)>1) stop(sprintf("%s has multiple instances in cache, please inspect.",
+               entity))
+    else if (nrow(pa)==1) return(pa$rpath)
+    target = paste0(prefix, folder, "/", entity)
+    tf = tempfile()
+    download.file(target, tf)
+    bfcrpath(ca, target, action="move")
+}
+
+#' get an anndata reference to 5k10k protein after totalVI from tutorial
+#' @examples
+#' get_pro_5k10k_adata()
+#' @export
+get_pro_5k10k_adata = function() {
+   ans = .osn_bucket_to_cache( "pbmc5k10k_pro_adata.h5ad" )
+   anndataR()$read(ans)
+}
+
+#' get matrices of normalized quantifications from full totalVI 5k10k from tutorial
+#' @examples
+#' nmlist = get_totalVI_normalized_5k10k()
+#' sapply(nmlist, dim)
+#' @export
+get_totalVI_normalized_5k10k = function() {
+   ans = .osn_bucket_to_cache( "nmlzd_5k10k.rda" )
+   load(ans, envir=.GlobalEnv)
+   get("nmlzd_5k10k")
+}
+
+#' get anndata reference to full totalVI processing of 5k10k data
+#' @examples
+#' full = get_totalVI_5k10k_adata()
+#' full
+#' @export
+get_totalVI_5k10k_adata = function() {
+   ans = .osn_bucket_to_cache( "full_5k10k_totalVI.h5ad" )
+   anndataR()$read(ans)
+}
+
+
+#
+#get_totalVI_normalized_5k10k = function() {
+#  ca = BiocFileCache()
+#  pa = bfcquery(ca, "nmlzd_5k10k.rda")
+#  if (nrow(pa)>1) stop("demo1.h5ad has multiple instances in cache, please inspect.")
+## returns tibble
+#  if (nrow(pa)>1) stop("demo1.h5ad has multiple instances in cache, please inspect.")
+#  else if (nrow(pa)==1) return(pa$rpath)
+## we need to retrieve if we get here
+#  gzdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/demo1.h5ad.gz"
+#  td = tempdir()
+#  targ = paste0(td, "/demo1.h5ad.gz")
+#  download.file(gzdat, targ)
+#  system(paste("gunzip", targ))  # bad?
+#  invisible(bfcrpath(ca, sub(".gz$", "", targ), action="move"))
+#191170194 BiocScviR/nmlzd_5k10k.rda
+#  3677260 BiocScviR/pbmc5k10k_pro_adata.h5ad
+#

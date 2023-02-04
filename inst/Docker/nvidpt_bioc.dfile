@@ -38,5 +38,7 @@ RUN Rscript -e "BiocManager::install('vjcitn/scviR'); library(scviR); example(ge
 ##   19  jupyter-notebook --allow-root --ip 0.0.0.0 --port 8888
 #
 #
+# FOR JUPYTER
+# docker run -p 8888:8888 -v $(pwd):/home/jovyan/work etc.
 ##docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -ti vjcitn/nvidpt_bioc:0.0.1 bash
 #
