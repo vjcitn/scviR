@@ -38,7 +38,14 @@ using
 
 ```{r dogetv}
 vae = get_citeseq_tutvae()
-vae
+class(vae)
+```
+
+Some fields available from the instance:
+```{r some}
+vae$is_trained
+cat(vae$`_model_summary_string`)
+vae$adata
 ```
 
 The structure of the VAE is reported using
