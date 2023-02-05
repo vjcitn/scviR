@@ -1,0 +1,128 @@
+---
+title: "scvi-tools CITE-seq tutorial in R, using serialized tutorial components"
+author: "Follows scvi-tools doc, Gayoso, Steier et al. DOI 10.1038/s41592-020-01050-x"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{scvi-tools CITE-seq tutorial in R, using serialized tutorial components}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# A CITE-seq example
+
+## Retrieval of PBMC data
+The following chunk will
+acquire (and cache, using BiocFileCache) a preprocessed version of the 10k and 5k combined
+CITE-seq experiments from the scvi-tools data repository.
+
+
+```{r doinit,message=FALSE}
+library(scviR)
+library(ggplot2)
+library(reshape2)
+adref = get_citeseq_5k10k_pbmcs()
+adref
+```
+
+## Retrieval of fitted VAE
+
+The totalVI variational autoencoder was fit
+with these data.  A fitted version is retrieved and cached
+using
+
+```{r dogetv}
+vae = get_citeseq_tutvae()
+vae
+```
+
+The structure of the VAE is reported using
+```{r lkmod, eval=FALSE}
+vae$module
+```
+This is quite voluminous and is provided in an appendix.
+
+## Trace of (negative) ELBO values
+
+```{r lkelb}
+h = vae$history
+npts = nrow(h$elbo_train)
+plot(seq_len(npts), as.numeric(h$elbo_train[[1]]), ylim=c(1200,1400), 
+  type="l", col="blue", main="Negative ELBO over training epochs",
+  ylab="neg. ELBO", xlab="epoch")
+graphics::legend(300, 1360, lty=1, col=c("blue", "orange"), legend=c("training", "validation"))
+graphics::lines(seq_len(npts), as.numeric(h$elbo_validation[[1]]), type="l", col="orange")
+```
+
+## Normalized quantities
+
+On a CPU, the following can take a long time.
+```{r getn, eval=FALSE}
+NE = vae$get_normalized_expression(n_samples=25L, 
+    return_mean=TRUE, 
+    transform_batch=c("PBMC10k", "PBMC5k")
+)
+```
+We provide the totalVI-based denoised quantities in
+```{r getdenoise}
+denoised = get_totalVI_normalized_5k10k()
+vapply(denoised, dim, integer(2))
+```
+Note that these have features as columns, samples (cells)
+as rows.
+```{r lkn}
+utils::head(colnames(denoised$rna_nmlzd))
+utils::head(colnames(denoised$prot_nmlzd))
+```
+
+## UMAP projection of Leiden clustering in the totalVI latent space
+
+We have stored a fully loaded anndata instance for retrieval
+to inspect the latent space and clustering produced
+by the tutorial notebook procedure.  The images produced here
+do not agree exactly with what I see in the colab pages for
+0.18.0 and 0.19.0.  The process was run in Jetstream2, not in colab.
+
+```{r getproj, fig.height=6}
+full = get_totalVI_5k10k_adata()
+# class distribution
+cllabs = full$obs$leiden_totalVI
+blabs = full$obs$batch
+table(cllabs)
+um = full$obsm$get("X_umap") 
+dd = data.frame(umap1=um[,1], umap2=um[,2], clust=factor(cllabs), batch=blabs)
+ggplot(dd, aes(x=umap1, y=umap2, colour=clust)) + geom_point(size=.05) +
+   guides(color = guide_legend(override.aes = list(size = 4)))
+```
+
+Effectiveness at accommodating the two-batch design is suggested by the
+mixed representation of the batches in all the Leiden clusters.
+```{r getba}
+ggplot(dd, aes(x=umap1, y=umap2, colour=factor(batch))) + geom_point(size=.05)
+```
+
+## Protein abundances in projected clusters
+
+We focus on four of the ADT.
+
+```{r lknn,fig.width=8}
+pro4 = denoised$prot_nmlzd[,1:4]
+names(pro4) = gsub("_.*", "", names(pro4))
+wprot = cbind(dd, pro4)
+mm = melt(wprot, id.vars=c("clust", "batch", "umap1", "umap2"))
+utils::head(mm,3)
+ggplot(mm, aes(x=umap1, y=umap2, colour=log1p(value))) + 
+   geom_point(size=.1) + facet_grid(.~variable)
+```
+
+# Appendix: The VAE module
+
+The structure of the VAE is reported using
+```{r lkmod2, eval=TRUE}
+vae$module
+```

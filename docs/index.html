@@ -45,6 +45,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/citeseq_tut.html">scvi-tools CITE-seq tutorial in R, using serialized tutorial components</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -73,7 +85,7 @@
 <ul>
 <li>The scviR vignette works through a chunk of the colab tutorial for <a href="https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.20.0/totalVI.ipynb" class="external-link">scvi-tools 0.19.0</a>; 0.20.0 employs muon, and this has not been addressed yet.</li>
 <li>scviR defines python infrastructure via the <a href="https://bioconductor.org/packages/basilisk" class="external-link">basilisk</a> discipline; the main python dependencies are declared in <code>R/basilisk.R</code>.</li>
-<li>We have collected a number of intermediate results so that the outputs of totalVI can be explored without taking the time to fit the model. The most important one is the anndata instance with representations of the latent space, cluster assignments, and UMAP projection:</li>
+<li>We have collected a number of intermediate results so that the outputs of totalVI (and other VI procedures) can be explored without taking the time to fit the model. An example in the CITE-seq domain is the anndata instance for the 5k-10k PBMC dataset with representations of the latent space, cluster assignments, and UMAP projection:</li>
 </ul>
 <pre><code>&gt; tot = get_totalVI_5k10k_adata() # retrieved on first call from Open Storage Network, cached
 &gt; tot

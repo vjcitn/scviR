@@ -66,10 +66,11 @@ cache_citeseq_5k10k_tutvae = function() {
 #st
 
 #' helper to get the tutorial VAE for PBMCs from scvi-tools tutorial
+#' @param use_gpu logical(1), defaulting to FALSE, passed to TOTALVI.load
 #' @examples
 #' get_citeseq_tutvae()
 #' @export
-get_citeseq_tutvae = function() {
+get_citeseq_tutvae = function(use_gpu=FALSE) {
    zpath = cache_citeseq_5k10k_tutvae()
    td = tempdir()
    unzip(zpath, exdir=td)
@@ -78,7 +79,7 @@ get_citeseq_tutvae = function() {
    adm = anndataR()
    hpath = cache_citeseq_5k10k_pbmcs()
    adata = adm$read(hpath)
-   mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=FALSE)
+   mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=use_gpu)
    mod
 }
 

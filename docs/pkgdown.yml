@@ -2,8 +2,9 @@ pandoc: '2.5'
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
+  citeseq_tut: citeseq_tut.html
   scviR: scviR.html
-last_built: 2023-02-05T00:40Z
+last_built: 2023-02-05T03:57Z
 urls:
   reference: https://github.com/vjcitn/scviR/reference
   article: https://github.com/vjcitn/scviR/articles
