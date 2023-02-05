@@ -1,6 +1,6 @@
 ---
 title: "scvi-tools CITE-seq tutorial in R, using serialized tutorial components"
-author: "Follows scvi-tools doc, Gayoso, Steier et al."
+author: "Follows scvi-tools doc, Gayoso, Steier et al. DOI 10.1038/s41592-020-01050-x"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,7 +16,7 @@ output:
 
 # Overview
 
-As of Jan 27 2023, the [scvi-tools](https://scvi-tools.org/) is
+[scvi-tools](https://scvi-tools.org/) is
 an element of the [scverse](https://scverse.org/) toolchest for
 single-cell omics data analysis.
 
@@ -28,14 +28,11 @@ using [basilisk](https://bioconductor.org/packages/basilisk)
 to manage R/python interoperation, and as of current
 writing we work with version 0.20.0 of scvi-tools.  Specific
 versions of python components are enumerated in the file R/basilisk.R.
-- We have found it useful to use both R and python in our
-developmental vignettes, which render nicely with Rstudio 2022.12.0 Build 353
-and beyond.
 - A docker container based on a PyTorch-oriented image in
 the [NVIDIA container registry](nvcr.io/nvidia/pytorch:22.12-py3) includes
 R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.18.0
 and scviR 0.0.1.  A Dockerfile is in scviR/inst/Docker;
-`vjcitn/nvidpt_bioc:0.0.1` can be pulled from dockerhub, it reports
+`vjcitn/nvidpt_bioc:0.0.2` can be pulled from dockerhub, it reports
 size 26.5GB.  *This will need to be updated to deal with scvi-tools 0.20.0.*
 - Code presented here follows [the colab vignette
 for scvi-tools 0.18.0](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb).  *We will check for modifications in the scvi-tools 0.20.0 notebook*.
