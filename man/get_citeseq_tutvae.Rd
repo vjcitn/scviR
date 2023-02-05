@@ -4,7 +4,10 @@
 \alias{get_citeseq_tutvae}
 \title{helper to get the tutorial VAE for PBMCs from scvi-tools tutorial}
 \usage{
-get_citeseq_tutvae()
+get_citeseq_tutvae(use_gpu = FALSE)
+}
+\arguments{
+\item{use_gpu}{logical(1), defaulting to FALSE, passed to TOTALVI.load}
 }
 \description{
 helper to get the tutorial VAE for PBMCs from scvi-tools tutorial

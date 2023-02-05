@@ -11,8 +11,9 @@ for [scvi-tools 0.19.0](https://colab.research.google.com/github/scverse/scvi-tu
 - scviR defines python infrastructure via the [basilisk](https://bioconductor.org/packages/basilisk)
 discipline; the main python dependencies are declared in `R/basilisk.R`.
 - We have collected a number of intermediate results so that the outputs of totalVI
-can be explored without taking the time to fit the model.  The most important one
-is the anndata instance with representations of the latent space, cluster
+(and other VI procedures)
+can be explored without taking the time to fit the model.  An example in the CITE-seq
+domain is the anndata instance for the 5k-10k PBMC dataset with representations of the latent space, cluster
 assignments, and UMAP projection:
 
 ```
