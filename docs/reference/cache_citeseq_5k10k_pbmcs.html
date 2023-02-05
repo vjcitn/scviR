@@ -28,7 +28,13 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/vjcitn/scviR/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -38,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>grab scvi-tools-processed PBMC CITE-seq data in anndata format (gzipped) from Open Storage Network</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/vjcitn/scviR/blob/HEAD/R/cache_citeseq_pbmcs.R"><code>R/cache_citeseq_pbmcs.R</code></a></small>
     <div class="hidden name"><code>cache_citeseq_5k10k_pbmcs.Rd</code></div>
     </div>
 
@@ -70,7 +76,24 @@ then processed according to steps in the scviR vignette, which follow the
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">cmeta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 52  5</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cmeta</span>, <span class="fl">17</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(cmeta, 17):</span> could not find function "head"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       group               name       otype  dclass          dim</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0                         /                  X H5I_DATASET   FLOAT 4000 x 10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                         /             layers   H5I_GROUP                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   /layers             counts H5I_DATASET   FLOAT 4000 x 10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                         /                obs   H5I_GROUP                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                      /obs        _scvi_batch H5I_DATASET INTEGER        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                      /obs       _scvi_labels H5I_DATASET INTEGER        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                      /obs              batch   H5I_GROUP                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                /obs/batch         categories H5I_DATASET  STRING            2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                /obs/batch              codes H5I_DATASET INTEGER        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                      /obs              index H5I_DATASET  STRING        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                     /obs           n_counts H5I_DATASET   FLOAT        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                     /obs            n_genes H5I_DATASET INTEGER        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                     /obs       percent_mito H5I_DATASET   FLOAT        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                        /               obsm   H5I_GROUP                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                    /obsm protein_expression   H5I_GROUP                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 /obsm/protein_expression    CD127_TotalSeqB H5I_DATASET INTEGER        10849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 /obsm/protein_expression     CD14_TotalSeqB H5I_DATASET INTEGER        10849</span>
 </code></pre></div>
     </div>
   </div>
