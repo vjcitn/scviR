@@ -19,8 +19,8 @@ VAE construction followed tutorial at
 \examples{
 zpath = cache_citeseq_5k10k_tutvae()
 td = tempdir()
-unzip(zpath, exdir=td)
-vaedir = paste0(td, "/vae1_ov")
+utils::unzip(zpath, exdir=td)
+vaedir = paste0(td, "/vae2_ov")
 scvi = scviR()
 adm = anndataR()
 hpath = cache_citeseq_5k10k_pbmcs()

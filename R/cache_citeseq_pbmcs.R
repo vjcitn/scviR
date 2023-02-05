@@ -12,14 +12,14 @@
 #' @export
 cache_citeseq_5k10k_pbmcs = function() {
   ca = BiocFileCache()
-  pa = bfcquery(ca, "demo1.h5ad")
+  pa = bfcquery(ca, "demo2.h5ad")
 # returns tibble
-  if (nrow(pa)>1) stop("demo1.h5ad has multiple instances in cache, please inspect.")
+  if (nrow(pa)>1) stop("demo2.h5ad has multiple instances in cache, please inspect.")
   else if (nrow(pa)==1) return(pa$rpath)
 # we need to retrieve if we get here
-  gzdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/demo1.h5ad.gz"
+  gzdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/demo2.h5ad.gz"
   td = tempdir()
-  targ = paste0(td, "/demo1.h5ad.gz")
+  targ = paste0(td, "/demo2.h5ad.gz")
   download.file(gzdat, targ)
   system(paste("gunzip", targ))  # bad?
   invisible(bfcrpath(ca, sub(".gz$", "", targ), action="move"))
@@ -27,14 +27,15 @@ cache_citeseq_5k10k_pbmcs = function() {
 
 #' grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
 #' @import BiocFileCache
+#' @importFrom utils unzip
 #' @note VAE construction followed tutorial at 
 #' `https://docs.scvi-tools.org/en/stable/tutorials/notebooks/totalVI.html`.
 #' @return invisibly, the path to the .zip file holding the fitted VAE and associated data
 #' @examples
 #' zpath = cache_citeseq_5k10k_tutvae()
 #' td = tempdir()
-#' unzip(zpath, exdir=td)
-#' vaedir = paste0(td, "/vae1_ov")
+#' utils::unzip(zpath, exdir=td)
+#' vaedir = paste0(td, "/vae2_ov")
 #' scvi = scviR()
 #' adm = anndataR()
 #' hpath = cache_citeseq_5k10k_pbmcs()
@@ -44,13 +45,13 @@ cache_citeseq_5k10k_pbmcs = function() {
 #' @export
 cache_citeseq_5k10k_tutvae = function() {
   ca = BiocFileCache()
-  pa = bfcquery(ca, "vae1_ov.zip")
+  pa = bfcquery(ca, "vae2_ov.zip")
 # returns tibble
-  if (nrow(pa)>1) stop("vae1_ov.zip has multiple instances in cache, please inspect.")
+  if (nrow(pa)>1) stop("vae2_ov.zip has multiple instances in cache, please inspect.")
   else if (nrow(pa)==1) return(pa$rpath)
-  zdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/vae1_ov.zip"
+  zdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/vae2_ov.zip"
   td = tempdir()
-  targ = paste0(td, "/vae1_ov.zip")
+  targ = paste0(td, "/vae2_ov.zip")
   download.file(zdat, targ)
   invisible(bfcrpath(ca, targ, action="move"))
 }
@@ -72,7 +73,7 @@ get_citeseq_tutvae = function() {
    zpath = cache_citeseq_5k10k_tutvae()
    td = tempdir()
    unzip(zpath, exdir=td)
-   vaedir = paste0(td, "/vae1_ov")
+   vaedir = paste0(td, "/vae2_ov")
    scvi = scviR()
    adm = anndataR()
    hpath = cache_citeseq_5k10k_pbmcs()

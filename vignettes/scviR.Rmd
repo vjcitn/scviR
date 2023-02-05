@@ -26,7 +26,7 @@ between R, Bioconductor and scvi-tools.
 - scvi-tools components develop rapidly; we are
 using [basilisk](https://bioconductor.org/packages/basilisk)
 to manage R/python interoperation, and as of current
-writing we work with version 0.18.0 of scvi-tools.  Specific
+writing we work with version 0.20.0 of scvi-tools.  Specific
 versions of python components are enumerated in the file R/basilisk.R.
 - We have found it useful to use both R and python in our
 developmental vignettes, which render nicely with Rstudio 2022.12.0 Build 353
@@ -36,9 +36,9 @@ the [NVIDIA container registry](nvcr.io/nvidia/pytorch:22.12-py3) includes
 R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.18.0
 and scviR 0.0.1.  A Dockerfile is in scviR/inst/Docker;
 `vjcitn/nvidpt_bioc:0.0.1` can be pulled from dockerhub, it reports
-size 26.5GB.
+size 26.5GB.  *This will need to be updated to deal with scvi-tools 0.20.0.*
 - Code presented here follows [the colab vignette
-for scvi-tools 0.18.0](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb).
+for scvi-tools 0.18.0](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb).  *We will check for modifications in the scvi-tools 0.20.0 notebook*.
 
 
 # A CITE-seq example
@@ -79,7 +79,7 @@ h = vae$history
 npts = nrow(h$elbo_train)
 plot(seq_len(npts), as.numeric(h$elbo_train[[1]]), ylim=c(1200,1400), 
   type="l", col="blue", main="Negative ELBO over training epochs")
-lines(seq_len(npts), as.numeric(h$elbo_validation[[1]]), type="l", col="orange")
+graphics::lines(seq_len(npts), as.numeric(h$elbo_validation[[1]]), type="l", col="orange")
 ```
 
 ## Normalized quantities
@@ -99,8 +99,8 @@ vapply(denoised, dim, integer(2))
 Note that these have features as columns, samples (cells)
 as rows.
 ```{r lkn}
-head(colnames(denoised$rna_nmlzd))
-head(colnames(denoised$prot_nmlzd))
+utils::head(colnames(denoised$rna_nmlzd))
+utils::head(colnames(denoised$prot_nmlzd))
 ```
 
 ## UMAP projection of Leiden clustering in the totalVI latent space
@@ -111,16 +111,16 @@ by the tutorial notebook procedure.  The images produced here
 do not agree exactly with what I see in the colab pages for
 0.18.0 and 0.19.0.  The process was run in Jetstream2, not in colab.
 
-```{r getproj}
+```{r getproj, fig.height=6}
 full = get_totalVI_5k10k_adata()
 # class distribution
-cllabs = suppressWarnings(full$obs$leiden_totalVI)
-blabs = suppressWarnings(full$obs$batch)
+cllabs = full$obs$leiden_totalVI
+blabs = full$obs$batch
 table(cllabs)
 um = full$obsm$get("X_umap") 
-dd = data.frame(umap1=um[,1], umap2=um[,2], clust=cllabs, batch=blabs)
+dd = data.frame(umap1=um[,1], umap2=um[,2], clust=factor(cllabs), batch=blabs)
 library(ggplot2)
-ggplot(dd, aes(x=umap1, y=umap2, colour=factor(cllabs))) + geom_point(size=.05)
+ggplot(dd, aes(x=umap1, y=umap2, colour=clust)) + geom_point(size=.05)
 ```
 
 Effectiveness at accommodating the two-batch design is suggested by the
@@ -139,8 +139,14 @@ names(pro4) = gsub("_.*", "", names(pro4))
 library(reshape2)
 wprot = cbind(dd, pro4)
 mm = melt(wprot, id.vars=c("clust", "batch", "umap1", "umap2"))
-head(mm,3)
+utils::head(mm,3)
 ggplot(mm, aes(x=umap1, y=umap2, colour=log1p(value))) + 
    geom_point(size=.1) + facet_grid(.~variable)
 ```
 
+# Appendix: The VAE module
+
+The structure of the VAE is reported using
+```{r lkmod2, eval=TRUE}
+vae$module
+```
