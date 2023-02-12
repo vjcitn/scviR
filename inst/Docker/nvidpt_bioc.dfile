@@ -3,7 +3,7 @@ FROM nvcr.io/nvidia/pytorch:22.12-py3
 #
 # start checking scvi
 #
-RUN pip install scvi-tools==0.18.0
+RUN pip install scvi-tools==0.20.0
 #
 # get R 4.2.2
 #
