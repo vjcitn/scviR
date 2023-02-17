@@ -37,6 +37,9 @@
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/citeseq_tut.html">scvi-tools CITE-seq tutorial in R, using serialized tutorial components</a>
     </li>
+    <li>
+      <a href="../articles/compch12.html">Comparing totalVI and OSCA book CITE-seq analyses</a>
+    </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/vjcitn/scviR/">
@@ -61,6 +64,10 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="adt_profiles.html">adt_profiles()</a></code> </p>
+        </td>
+        <td><p>produce a heatmap from a specialized CITE-seq SingleCellExperiment</p></td>
+      </tr><tr><td>
           <p><code><a href="anndataR.html">anndataR()</a></code> </p>
         </td>
         <td><p>basic interface to anndata</p></td>
@@ -73,6 +80,18 @@
         </td>
         <td><p>grab scvi-tools VAE instance built on the PBMC datasets following the tutorial</p></td>
       </tr><tr><td>
+          <p><code><a href="explore_subcl.html">explore_subcl()</a></code> </p>
+        </td>
+        <td><p>app to explore diversity in RNA-subclusters within ADT clusters</p></td>
+      </tr><tr><td>
+          <p><code><a href="get_ch12_allsce.html">get_ch12_allsce()</a></code> </p>
+        </td>
+        <td><p>get list of cluster-specific SCE for 10k PBMC annotated as in OSCA book chapter 12</p></td>
+      </tr><tr><td>
+          <p><code><a href="get_ch12sce.html">get_ch12sce()</a></code> </p>
+        </td>
+        <td><p>get SCE for 10k PBMC annotated as in OSCA book chapter 12</p></td>
+      </tr><tr><td>
           <p><code><a href="get_citeseq_5k10k_pbmcs.html">get_citeseq_5k10k_pbmcs()</a></code> </p>
         </td>
         <td><p>helper to get the processed anndata for CITE-seq PBMCs from scvi-tools tutorial</p></td>
@@ -84,6 +103,14 @@
           <p><code><a href="get_pro_5k10k_adata.html">get_pro_5k10k_adata()</a></code> </p>
         </td>
         <td><p>get an anndata reference to 5k10k protein after totalVI from tutorial</p></td>
+      </tr><tr><td>
+          <p><code><a href="get_subcl_LM.html">get_subcl_LM()</a></code> </p>
+        </td>
+        <td><p>get lmFit for heterogeneity across subclusters</p></td>
+      </tr><tr><td>
+          <p><code><a href="get_subclustering_features.html">get_subclustering_features()</a></code> </p>
+        </td>
+        <td><p>get lmFit F-stat based collection of n genes most varying in mean across subclusters</p></td>
       </tr><tr><td>
           <p><code><a href="get_totalVI_5k10k_adata.html">get_totalVI_5k10k_adata()</a></code> </p>
         </td>

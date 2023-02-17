@@ -7,6 +7,9 @@
     <loc>https://github.com/vjcitn/scviR/articles/citeseq_tut.html</loc>
   </url>
   <url>
+    <loc>https://github.com/vjcitn/scviR/articles/compch12.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/vjcitn/scviR/articles/index.html</loc>
   </url>
   <url>
@@ -19,6 +22,9 @@
     <loc>https://github.com/vjcitn/scviR/index.html</loc>
   </url>
   <url>
+    <loc>https://github.com/vjcitn/scviR/reference/adt_profiles.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/vjcitn/scviR/reference/anndataR.html</loc>
   </url>
   <url>
@@ -28,6 +34,15 @@
     <loc>https://github.com/vjcitn/scviR/reference/cache_citeseq_5k10k_tutvae.html</loc>
   </url>
   <url>
+    <loc>https://github.com/vjcitn/scviR/reference/explore_subcl.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/get_ch12_allsce.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/get_ch12sce.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/vjcitn/scviR/reference/get_citeseq_5k10k_pbmcs.html</loc>
   </url>
   <url>
@@ -35,6 +50,12 @@
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/get_pro_5k10k_adata.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/get_subcl_LM.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/get_subclustering_features.html</loc>
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/get_totalVI_5k10k_adata.html</loc>
