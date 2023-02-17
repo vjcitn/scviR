@@ -14,7 +14,8 @@ License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 4.2), dplyr, basilisk, shiny
 Imports: reticulate, BiocFileCache, utils, graphics
-Suggests: knitr, testthat, reshape2, ggplot2, rhdf5
+Suggests: knitr, testthat, reshape2, ggplot2, rhdf5,
+	ComplexHeatmap
 VignetteBuilder: knitr
 biocViews: Infrastructure
 RoxygenNote: 7.2.3
