@@ -165,6 +165,7 @@ markers <- c("GZMH", "IL7R", "KLRB1")
 plotExpression(ch12_allsce[[of.interest]], x="subcluster",
     features=markers, swap_rownames="Symbol", ncol=3)
 ```
+
 There is a suggestion of a boolean basis for subcluster
 identity, depending on low or high expression of the selected genes.
 
