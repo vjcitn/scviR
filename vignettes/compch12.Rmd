@@ -147,3 +147,34 @@ adt_profiles = function(x) {
 }
 adt_profiles(ch12sce_matched)
 ```
+
+## Marker patterns in mRNA-based sub-clusters of ADT-based clusters
+
+```{r dosubcl}
+load("/tmp/ch12_allsce.rda")
+ch12_allsce = lapply(ch12_allsce, function(x) {
+   colnames(x)= x$Barcode; 
+   cn = colnames(x); 
+   x = x[,intersect(cn,comm)]; x})
+#ncells <- vapply(ch12_allsce, ncol, 0L)
+#nsubclusters <- vapply(ch12_allsce, FUN=function(x) length(unique(x$subcluster)), 0L)
+#plot(ncells, nsubclusters, xlab="Number of cells", type="n",
+#    ylab="Number of subclusters", log="xy")
+#text(ncells, nsubclusters, names(all.sce))
+#ncells <- vapply(ch12_allsce, ncol, 0L)
+#nsubclusters <- vapply(ch12_allsce, FUN=function(x) length(unique(x$subcluster)), 0L)
+#plot(ncells, nsubclusters, xlab="Number of cells", type="n",
+#    ylab="Number of subclusters", log="xy")
+#text(ncells, nsubclusters, names(ch12_allsce))
+of.interest <- "3"
+markers <- c("GZMH", "IL7R", "KLRB1")
+plotExpression(ch12_allsce[[of.interest]], x="subcluster",
+    features=markers, swap_rownames="Symbol", ncol=3)
+```
+
+## Graduated relationships between mRNA and surface protein expression
+
+```{r lkgra}
+plotExpression(ch12_allsce[["3"]], x="CD127", show_smooth=TRUE, show_se=FALSE, 
+    features=c("TPT1", "GZMH"), swap_rownames="Symbol")
+```
