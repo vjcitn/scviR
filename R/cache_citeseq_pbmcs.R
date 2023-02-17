@@ -100,9 +100,9 @@ get_citeseq_5k10k_pbmcs = function() {
                entity))
     else if (nrow(pa)==1) return(pa$rpath)
     target = paste0(prefix, folder, "/", entity)
-    tf = tempfile()
+    tf = tempfile(entity) # for metadata
     download.file(target, tf)
-    bfcrpath(ca, target, action="move")
+    bfcrpath(ca, tf, action="move")
 }
 
 #' get an anndata reference to 5k10k protein after totalVI from tutorial

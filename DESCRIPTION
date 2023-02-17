@@ -12,7 +12,7 @@ Authors@R:
 Description: experimental inferface from R to scvi-tools
 License: Artistic-2.0
 Encoding: UTF-8
-Depends: R (>= 4.2), dplyr, basilisk
+Depends: R (>= 4.2), dplyr, basilisk, shiny
 Imports: reticulate, BiocFileCache, utils, graphics
 Suggests: knitr, testthat, reshape2, ggplot2, rhdf5
 VignetteBuilder: knitr
