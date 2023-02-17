@@ -1,0 +1,149 @@
+---
+title: "Comparing totalVI and OSCA book CITE-seq analyses"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Comparing totalVI and OSCA book CITE-seq analyses}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Overview
+
+This vignette endeavors to put Bioconductor and scvi-tools
+together to help understand how different data structures and methods
+relevant to CITE-seq analysis contribute to interpretation
+of CITE-seq exeperiments.
+
+The scvi-tools tutorial (for version 0.20.0)
+analyzes a pair of 10x PBMC CITE-seq experiments (5k and 10k cells).
+Chapter 12 of the OSCA book analyzes only the 10k dataset.
+
+# Technical steps to facilitate comparison
+
+## Acquire software
+```{r getsoft, message=FALSE}
+library(SingleCellExperiment)
+library(scater)
+library(scviR)
+```
+
+## Obtain key data representations
+
+```{r getdat}
+load("/tmp/ch12sce.rda")  # needs updating and OSN function
+fullvi = get_totalVI_5k10k_adata()
+```
+
+## Assemble a SingleCellExperiment with totalVI outputs
+
+### Acquire cell identities and batch labels
+
+```{r basicvecs}
+totvi_cellids = rownames(fullvi$obs)
+totvi_batch = fullvi$obs$batch
+```
+
+### Acquire quantifications and latent space positions
+
+```{r latent}
+totvi_latent = fullvi$obsm$get("X_totalVI")
+totvi_umap = fullvi$obsm$get("X_umap")
+totvi_denoised_rna = fullvi$layers$get("denoised_rna")
+totvi_denoised_protein = fullvi$obsm$get("denoised_protein")
+totvi_leiden = fullvi$obs$leiden_totalVI
+```
+
+
+### Drop 5k data from all
+
+```{r remove5k}
+is5k = which(totvi_batch == "PBMC5k")
+totvi_cellids = totvi_cellids[-is5k]
+totvi_latent = totvi_latent[-is5k,]
+totvi_umap = totvi_umap[-is5k,]
+totvi_denoised_rna = totvi_denoised_rna[-is5k,]
+totvi_denoised_protein = totvi_denoised_protein[-is5k,]
+totvi_leiden = totvi_leiden[-is5k]
+```
+
+### Label the rows of components
+
+```{r rown}
+rownames(totvi_latent) = totvi_cellids
+rownames(totvi_umap) = totvi_cellids
+rownames(totvi_denoised_rna) = totvi_cellids
+rownames(totvi_denoised_protein) = totvi_cellids
+names(totvi_leiden) = totvi_cellids
+```
+
+### Find common cell ids
+
+In this section we reduce the cell collections
+to cells common to the chapter 12 and totalVI
+datasets.
+
+```{r findcomm}
+comm = intersect(totvi_cellids, ch12sce$Barcode)
+```
+
+### Build the totalVI SingleCellExperiment
+
+```{r dosce}
+# select and order
+totvi_latent = totvi_latent[comm,]
+totvi_umap = totvi_umap[comm,]
+totvi_denoised_rna = totvi_denoised_rna[comm,]
+totvi_denoised_protein = totvi_denoised_protein[comm,]
+totvi_leiden = totvi_leiden[comm]
+ 
+# organize the totalVI into SCE with altExp
+
+totsce = SingleCellExperiment(SimpleList(logcounts=t(totvi_denoised_rna))) # FALSE name
+nn = SingleCellExperiment(SimpleList(logcounts=t(totvi_denoised_protein))) # FALSE name
+reducedDims(nn) = list(UMAP=totvi_umap)
+altExp(totsce) = nn
+altExpNames(totsce) = "denoised_protein"
+totsce$leiden = totvi_leiden
+altExp(totsce)$leiden = totvi_leiden
+altExp(totsce)$ch12.clusters = altExp(ch12sce[,comm])$label
+```
+
+### Reduce the chapter 12 dataset to the cells held in common
+
+```{r trim12}
+colnames(ch12sce) = ch12sce$Barcode
+ch12sce_matched = ch12sce[, comm]
+```
+
+# Key outputs of the chapter 12 analysis
+
+## Clustering and projection based on the ADT quantifications
+
+The TSNE projection of the normalized ADT quantifications and
+the [walktrap](https://arxiv.org/abs/physics/0512106) cluster assignments
+are produced for the cells common to the two approaches.
+
+```{r lkkey}
+plotTSNE(altExp(ch12sce_matched), color_by="label", text_by="label")
+```
+ 
+## Cluster profiles based on averaging ADT quantities within clusters
+
+This heatmap uses precomputed cluster averages that are
+lodged in the metadata element of the SingleCellExperiment.
+```{r lkadt}
+adt_profiles = function(x) {
+ stopifnot("se.averaged" %in% names(metadata(x)))
+ avg = assay(metadata(x)$se.averaged)
+ ComplexHeatmap::pheatmap(avg - rowMeans(avg),
+  breaks=seq(-3,3, length.out=101))
+}
+adt_profiles(ch12sce_matched)
+```
