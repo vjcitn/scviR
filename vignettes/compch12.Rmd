@@ -139,12 +139,6 @@ plotTSNE(altExp(ch12sce_matched), color_by="label", text_by="label")
 This heatmap uses precomputed cluster averages that are
 lodged in the metadata element of the SingleCellExperiment.
 ```{r lkadt}
-adt_profiles = function(x) {
- stopifnot("se.averaged" %in% names(metadata(x)))
- avg = assay(metadata(x)$se.averaged)
- ComplexHeatmap::pheatmap(avg - rowMeans(avg),
-  breaks=seq(-3,3, length.out=101))
-}
 adt_profiles(ch12sce_matched)
 ```
 

@@ -135,6 +135,23 @@ get_totalVI_5k10k_adata = function() {
    anndataR()$read(ans)
 }
 
+#' get SCE for 10k PBMC annotated as in OSCA book chapter 12
+#' @note This is a SingleCellExperiment instance with data on 7472 cells from a 10x
+#' CITE-seq experiment.  An altExp component includes
+#' antibody-derived tag (ADT) counts on 17 proteins.  The data are acquired and
+#' processed as described in ch 12 of the OSCA book, circa February 2023.
+#' A metadata element (se.averaged) includes the result of averaging protein abundance
+#' estimates within ADT-based clusters, as is done to give rise to Figure 12.8 of
+#' the OSCA book.
+#' @examples
+#' ch12sce = get_ch12sce()
+#' ch12sce
+#' @export
+get_ch12sce = function() {
+   ans = .osn_bucket_to_cache( "ch12sce.rda" )
+   get(load(ans))
+}
+
 
 #
 #get_totalVI_normalized_5k10k = function() {
