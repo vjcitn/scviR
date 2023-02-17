@@ -1,6 +1,6 @@
 ---
 title: "Comparing totalVI and OSCA book CITE-seq analyses"
-author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+author: "OSCA book authors and Vincent J. Carey, stvjc at channing.harvard.edu"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
@@ -36,9 +36,14 @@ library(scviR)
 
 ## Obtain key data representations
 
-```{r getdat}
-load("/tmp/ch12sce.rda")  # needs updating and OSN function
+```{r getdat, message=FALSE}
+ch12sce = get_ch12sce()
+ch12sce
+```
+
+```{r getdat2, message=FALSE}
 fullvi = get_totalVI_5k10k_adata()
+fullvi
 ```
 
 ## Assemble a SingleCellExperiment with totalVI outputs
@@ -138,36 +143,36 @@ plotTSNE(altExp(ch12sce_matched), color_by="label", text_by="label")
 
 This heatmap uses precomputed cluster averages that are
 lodged in the metadata element of the SingleCellExperiment.
+Colors represent the log2-fold change from the grand average across all clusters.
 ```{r lkadt}
 adt_profiles(ch12sce_matched)
 ```
 
-## Marker patterns in mRNA-based sub-clusters of ADT-based clusters
+## Marker expression patterns in mRNA-based sub-clusters of ADT-based clusters
 
+We enhance the annotation of the list of subclusters retrieved
+using `get_ch12_allsce` and then drill into mRNA-based
+subclusters of ADT-based cluster 3 to compare expression levels
+of three genes.
 ```{r dosubcl}
-load("/tmp/ch12_allsce.rda")
+ch12_allsce = get_ch12_allsce() 
 ch12_allsce = lapply(ch12_allsce, function(x) {
    colnames(x)= x$Barcode; 
    cn = colnames(x); 
    x = x[,intersect(cn,comm)]; x})
-#ncells <- vapply(ch12_allsce, ncol, 0L)
-#nsubclusters <- vapply(ch12_allsce, FUN=function(x) length(unique(x$subcluster)), 0L)
-#plot(ncells, nsubclusters, xlab="Number of cells", type="n",
-#    ylab="Number of subclusters", log="xy")
-#text(ncells, nsubclusters, names(all.sce))
-#ncells <- vapply(ch12_allsce, ncol, 0L)
-#nsubclusters <- vapply(ch12_allsce, FUN=function(x) length(unique(x$subcluster)), 0L)
-#plot(ncells, nsubclusters, xlab="Number of cells", type="n",
-#    ylab="Number of subclusters", log="xy")
-#text(ncells, nsubclusters, names(ch12_allsce))
 of.interest <- "3"
 markers <- c("GZMH", "IL7R", "KLRB1")
 plotExpression(ch12_allsce[[of.interest]], x="subcluster",
     features=markers, swap_rownames="Symbol", ncol=3)
 ```
+There is a suggestion of a boolean basis for subcluster
+identity, depending on low or high expression of the selected genes.
 
 ## Graduated relationships between mRNA and surface protein expression
 
+Following the exploration in OSCA chapter 12, cluster 3 is analyzed
+for a regression association between expression
+measures of two genes and the ADT-based abundance of CD127.
 ```{r lkgra}
 plotExpression(ch12_allsce[["3"]], x="CD127", show_smooth=TRUE, show_se=FALSE, 
     features=c("TPT1", "GZMH"), swap_rownames="Symbol")

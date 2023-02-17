@@ -152,6 +152,21 @@ get_ch12sce = function() {
    get(load(ans))
 }
 
+#' get list of cluster-specific SCE for 10k PBMC annotated as in OSCA book chapter 12
+#' @note This is a list of SingleCellExperiment instances with data on a total of 7472 cells from a 10x
+#' CITE-seq experiment.  An altExp component in each list element includes
+#' antibody-derived tag (ADT) counts on 17 proteins.  The data are acquired and
+#' processed as described in ch 12 of the OSCA book, circa February 2023.
+#' List elements correspond to mRNA-based sub-clusters of ADT-based clusters.
+#' @examples
+#' ch12_allsce = get_ch12_allsce()
+#' sapply(ch12_allsce, ncol)
+#' @export
+get_ch12_allsce = function() {
+   ans = .osn_bucket_to_cache( "ch12_allsce.rda" )
+   get(load(ans))
+}
+
 
 #
 #get_totalVI_normalized_5k10k = function() {
