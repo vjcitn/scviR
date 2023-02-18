@@ -19,7 +19,7 @@ It is assumed that 'logcounts' is an assay element,
 and that 'subcluster' is a colData element of each SCE in inlist
 }
 \examples{
-data(all.sce)
+all.sce = get_ch12_allsce()
 lm3 = get_subcl_LM(all.sce, "3")
 names(lm3)
 }

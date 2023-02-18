@@ -21,10 +21,10 @@ TSNE should already be available in `altExp(sce)`; follow OSCA book 12.5.2.  If 
 example, set `ask=FALSE`.
 }
 \examples{
-if (interactive()) {
- data(sce)
- data(all.sce)
+\dontrun{
+ sce = get_ch12sce()
+ all.sce = get_ch12_allsce()
  data(clusters.adt)
- explore_subcl( sce, all.sce, clusters.adt )
+ explore_subcl( sce, all.sce, clusters.adt )  # trips up interactive pkgdown?
 }
 }

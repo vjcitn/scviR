@@ -1,18 +1,20 @@
 #' get lmFit for heterogeneity across subclusters
+#' @importFrom limma lmFit eBayes topTable
+#' @import SummarizedExperiment
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
 #' @param clname character(1) name of cluster SCE to assess
 #' @note It is assumed that 'logcounts' is an assay element,
 #' and that 'subcluster' is a colData element of each SCE in inlist
 #' @examples
-#' data(all.sce)
+#' all.sce = get_ch12_allsce()
 #' lm3 = get_subcl_LM(all.sce, "3")
 #' names(lm3)
 #' @export
 get_subcl_LM = function(inlist, clname) {
   se = inlist[[clname]]
-  x = assay(se, "logcounts")
+  x = SummarizedExperiment::assay(se, "logcounts")
   mm = model.matrix(~subcluster, data=as.data.frame(colData(se)))
-  lmFit(x, mm)
+  limma::lmFit(x, mm)
 }
 
 #' get lmFit F-stat based collection of n genes most varying in mean across subclusters
@@ -22,7 +24,7 @@ get_subcl_LM = function(inlist, clname) {
 #' @return list with two elements, feat = rowData corresponding to variable genes, stats = topTable result
 #' @note Symbol will be taken from feat and placed in stats component if available
 #' @examples
-#' data(all.sce)
+#' all.sce = get_ch12_allsce()
 #' scl = get_subclustering_features(all.sce, "3", 10)
 #' names(scl)
 #' @export
@@ -41,17 +43,18 @@ get_subclustering_features = function(inlist, clname, n=20) {
 }
 
 #' app to explore diversity in RNA-subclusters within ADT clusters
+#' @import scater
 #' @param sce a SingleCellExperiment with altExp with ADT quantification
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
 #' @param adtcls vector of ADT cluster assignments
 #' @note TSNE should already be available in `altExp(sce)`; follow OSCA book 12.5.2.  If using
 #' example, set `ask=FALSE`.
 #' @examples
-#' if (interactive()) {
-#'  data(sce)
-#'  data(all.sce)
+#' \dontrun{
+#'  sce = get_ch12sce()
+#'  all.sce = get_ch12_allsce()
 #'  data(clusters.adt)
-#'  explore_subcl( sce, all.sce, clusters.adt )
+#'  explore_subcl( sce, all.sce, clusters.adt )  # trips up interactive pkgdown?
 #' }
 #' @export
 explore_subcl = function( sce, inlist, adtcls ) {
@@ -60,7 +63,7 @@ explore_subcl = function( sce, inlist, adtcls ) {
    sidebarPanel(
     helpText("Explore CITE-seq subclusters"),
     selectInput("clpick", "ADT cluster", choices=names(inlist), selected="3"),
-    selectInput("baseADT", "Base for smooths", choices=rowData(altExp(sce))$ID, selected="CD127",
+    selectInput("baseADT", "Base for smooths", choices=SummarizedExperiment::rowData(altExp(sce))$ID, selected="CD127",
        multiple=FALSE),
     uiOutput("feats"), width=2
     ),
@@ -90,7 +93,7 @@ abundance for selected genes and a given protein in the ADT panel."))
   )
  server = function(input, output, session) {
   output$tsne = renderPlot({
-   plotTSNE(altExp(sce), colour_by="label", text_by = "label", text_color="red")
+   scater::plotTSNE(altExp(sce), colour_by="label", text_by = "label", text_color="red")
    })
   output$heatmap = renderPlot({
    se.avg = sumCountsAcrossCells(altExp(sce), adtcls, exprs_values = "logcounts", average=TRUE)

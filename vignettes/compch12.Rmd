@@ -265,3 +265,23 @@ rowData(altExp(tsub)) = DataFrame(Symbol=rn)
 plotExpression(tsub, x="CD127", show_smooth=TRUE, show_se=FALSE,
    features=c("IL7R", "KLRB1", "GZMH"), swap_rownames="Symbol")
 ```
+
+# Conclusions
+
+We have shown how rudimentary programming and data
+organization can be used to make
+outputs of OSCA and totalVI methods amenable to comparison
+in the Bioconductor framework.
+
+The scviR package includes a shiny app in the function
+`explore_subcl` that should be expanded to facilitate
+exploration of totalVI subclusters.  Much more work
+remains to be done in the area of exploring
+
+- additional approaches to integrative interpretation of
+ADT and mRNA abundance patterns, such as intersection and
+concatenation methods in the feature selection materials
+in OSCA ch. 12
+
+- effects of tuning and architecture details for the totalVI
+VAE

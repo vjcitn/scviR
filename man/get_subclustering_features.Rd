@@ -23,7 +23,7 @@ get lmFit F-stat based collection of n genes most varying in mean across subclus
 Symbol will be taken from feat and placed in stats component if available
 }
 \examples{
-data(all.sce)
+all.sce = get_ch12_allsce()
 scl = get_subclustering_features(all.sce, "3", 10)
 names(scl)
 }
