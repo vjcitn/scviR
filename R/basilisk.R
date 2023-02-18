@@ -1,6 +1,8 @@
 
 
 # necessary for python module control
+#' python declarations
+#' @import basilisk
 bsklenv <- basilisk::BasiliskEnvironment(envname="bsklenv",
     pkgname="scviR",
     packages=c("numpy==1.23.1", "pandas==1.4.4"),

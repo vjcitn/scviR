@@ -1,5 +1,6 @@
 #' get lmFit for heterogeneity across subclusters
 #' @importFrom limma lmFit eBayes topTable
+#' @import SingleCellExperiment
 #' @import SummarizedExperiment
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
 #' @param clname character(1) name of cluster SCE to assess
@@ -44,6 +45,7 @@ get_subclustering_features = function(inlist, clname, n=20) {
 
 #' app to explore diversity in RNA-subclusters within ADT clusters
 #' @import scater
+#' @import shiny
 #' @param sce a SingleCellExperiment with altExp with ADT quantification
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
 #' @param adtcls vector of ADT cluster assignments
