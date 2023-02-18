@@ -28,10 +28,19 @@
     <loc>https://github.com/vjcitn/scviR/reference/anndataR.html</loc>
   </url>
   <url>
+    <loc>https://github.com/vjcitn/scviR/reference/bsklenv.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/vjcitn/scviR/reference/cache_citeseq_5k10k_pbmcs.html</loc>
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/cache_citeseq_5k10k_tutvae.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/clusters.adt.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/clusters.rna.html</loc>
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/explore_subcl.html</loc>
