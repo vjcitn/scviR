@@ -111,6 +111,9 @@ totvi_leiden = totvi_leiden[comm]
 # organize the totalVI into SCE with altExp
 
 totsce = SingleCellExperiment(SimpleList(logcounts=t(totvi_denoised_rna))) # FALSE name
+rowData(totsce) = S4Vectors::DataFrame(fullvi$var)
+rownames(totsce) = rownames(fullvi$var)
+rowData(totsce)$Symbol = rownames(totsce)
 nn = SingleCellExperiment(SimpleList(logcounts=t(totvi_denoised_protein))) # FALSE name
 reducedDims(nn) = list(UMAP=totvi_umap)
 altExp(totsce) = nn
@@ -118,6 +121,13 @@ altExpNames(totsce) = "denoised_protein"
 totsce$leiden = totvi_leiden
 altExp(totsce)$leiden = totvi_leiden
 altExp(totsce)$ch12.clusters = altExp(ch12sce[,comm])$label
+
+# add average ADT abundance to metadata, for adt_profiles
+
+tot.se.averaged <- sumCountsAcrossCells(altExp(totsce), altExp(totsce)$leiden,
+    exprs_values="logcounts", average=TRUE)
+rownames(tot.se.averaged) = gsub("_TotalSeqB", "", rownames(tot.se.averaged))
+metadata(totsce)$se.averaged = tot.se.averaged
 ```
 
 ### Reduce the chapter 12 dataset to the cells held in common
@@ -177,4 +187,81 @@ measures of two genes and the ADT-based abundance of CD127.
 ```{r lkgra}
 plotExpression(ch12_allsce[["3"]], x="CD127", show_smooth=TRUE, show_se=FALSE, 
     features=c("TPT1", "GZMH"), swap_rownames="Symbol")
+```
+
+# Analogs to the chapter 12 findings, based on totalVI quantifications
+
+## The Leiden clustering in UMAP projection
+
+```{r lktotumap}
+plotUMAP(altExp(totsce), color_by="leiden", text_by="leiden")
+```
+
+## Cluster profiles based on average ADT abundance, using denoised protein quantifications
+
+The approach to profiling the ADT abundances used in the totalVI
+tutorial employs scaling to (0,1).
+
+```{r domattot}
+tav = S4Vectors::metadata(totsce)$se.averaged
+ata = assay(tav)
+uscale = function(x) (x-min(x))/max(x)
+scmat = t(apply(ata,1,uscale))
+pheatmap::pheatmap(scmat, cluster_rows=FALSE)
+```
+
+## Concordance in ADT-based clustering between OSCA and totalVI
+
+A quick view of the concordance of the two clustering outcomes
+is
+
+```{r lkconc}
+atot = altExp(totsce)
+ach12 = altExp(ch12sce_matched)
+tt = table(ch12=ach12$label, VI=atot$leiden)
+pheatmap::pheatmap(log(tt+1))
+```
+
+With this we can pick out some
+clusters with many cells in common:
+
+```{r lkcomm}
+lit = tt[c("9", "12", "5", "3"), c("0", "1", "2", "8", "6", "5")]
+rownames(lit) = sQuote(rownames(lit))
+colnames(lit) = sQuote(colnames(lit))
+lit
+```
+
+## Subcluster assessment for OSCA cluster "3"
+
+Let's examine the distributions of marker mRNAs in
+the Leiden totalVI clusters  corresponding to OSCA cluster "3":
+
+```{r lksubsss}
+tsub = totsce[,which(altExp(totsce)$leiden %in% c("5", "6", "8"))]
+markers <- c("GZMH", "IL7R", "KLRB1")
+altExp(tsub)$leiden = factor(altExp(tsub)$leiden) # squelch unused levels
+tsub$leiden = factor(tsub$leiden) # squelch unused levels
+plotExpression(tsub, x="leiden",
+    features=markers, swap_rownames="Symbol", ncol=3)
+```
+
+Note that the y axis label is incorrect -- we are plotting the denoised
+expression values from totalVI.
+
+The display seems roughly consistent with the "boolean basis" observed above with
+the mRNA-based subclustering.  
+
+## Graduated relationships between ADT and mRNA abundance as measured by totalVI
+
+The same approach is taken as above.  We don't have TPT1 in the 4000 genes
+retained in the totalVI exercise, and we substitute IL7R.
+
+```{r lkgradvi}
+rn = rownames(altExp(tsub))
+rn = gsub("_TotalSeqB", "", rn)
+rownames(altExp(tsub)) = rn
+rowData(altExp(tsub)) = DataFrame(Symbol=rn)
+plotExpression(tsub, x="CD127", show_smooth=TRUE, show_se=FALSE,
+   features=c("IL7R", "GZMH"), swap_rownames="Symbol")
 ```

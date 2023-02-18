@@ -30,4 +30,11 @@ AnnData object with n_obs × n_vars = 10849 × 4000
 
  PBMC5k PBMC10k 
    3994    6855 
+
+> dim(xx$obsm$get("X_totalVI"))  # cell positions in 20 dimensional latent space
+[1] 10849    20
+
 ```
+
+Vignettes in the package show how to populate a Bioconductor SingleCellExperiment with
+components of this structure to help compare methods employed in the two frameworks.
