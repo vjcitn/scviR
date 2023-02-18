@@ -183,10 +183,10 @@ identity, depending on low or high expression of the selected genes.
 
 Following the exploration in OSCA chapter 12, cluster 3 is analyzed
 for a regression association between expression
-measures of two genes and the ADT-based abundance of CD127.
+measures of three genes and the ADT-based abundance of CD127.
 ```{r lkgra}
 plotExpression(ch12_allsce[["3"]], x="CD127", show_smooth=TRUE, show_se=FALSE, 
-    features=c("TPT1", "GZMH"), swap_rownames="Symbol")
+    features=c("IL7R", "TPT1", "KLRB1", "GZMH"), swap_rownames="Symbol")
 ```
 
 # Analogs to the chapter 12 findings, based on totalVI quantifications
@@ -255,7 +255,7 @@ the mRNA-based subclustering.
 ## Graduated relationships between ADT and mRNA abundance as measured by totalVI
 
 The same approach is taken as above.  We don't have TPT1 in the 4000 genes
-retained in the totalVI exercise, and we substitute IL7R.
+retained in the totalVI exercise.
 
 ```{r lkgradvi}
 rn = rownames(altExp(tsub))
@@ -263,5 +263,5 @@ rn = gsub("_TotalSeqB", "", rn)
 rownames(altExp(tsub)) = rn
 rowData(altExp(tsub)) = DataFrame(Symbol=rn)
 plotExpression(tsub, x="CD127", show_smooth=TRUE, show_se=FALSE,
-   features=c("IL7R", "GZMH"), swap_rownames="Symbol")
+   features=c("IL7R", "KLRB1", "GZMH"), swap_rownames="Symbol")
 ```
