@@ -9,7 +9,7 @@ Authors@R:
         comment = c(ORCID = "0000-0003-4046-0063")
      )
     )
-Description: This package definces inferfaces from R to scvi-tools.  A
+Description: This package defines interfaces from R to scvi-tools.  A
 	vignette works through the totalVI tutorial for analyzing CITE-seq
 	data.  Another vignette compares outputs of Chapter 12 of the
 	OSCA book with analogous outputs based on totalVI quantifications.
