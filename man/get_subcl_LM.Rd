@@ -11,6 +11,9 @@ get_subcl_LM(inlist, clname)
 
 \item{clname}{character(1) name of cluster SCE to assess}
 }
+\value{
+limma::lmFit output
+}
 \description{
 get lmFit for heterogeneity across subclusters
 }

@@ -6,6 +6,9 @@
 \usage{
 get_citeseq_5k10k_pbmcs()
 }
+\value{
+python reference to anndata
+}
 \description{
 helper to get the processed anndata for CITE-seq PBMCs from scvi-tools tutorial
 }

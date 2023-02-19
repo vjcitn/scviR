@@ -9,6 +9,9 @@ get_citeseq_tutvae(use_gpu = FALSE)
 \arguments{
 \item{use_gpu}{logical(1), defaulting to FALSE, passed to TOTALVI.load}
 }
+\value{
+python reference to anndata
+}
 \description{
 helper to get the tutorial VAE for PBMCs from scvi-tools tutorial
 }

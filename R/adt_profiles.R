@@ -12,6 +12,7 @@
 #' defaults to false
 #' @return ComplexHeatmap::pheatmap instance
 #' @note See the OSCA book ch12.5.2 for the application.  
+#' @return side effect of pheatmap::pheatmap call
 #' @examples
 #' ch12sce = get_ch12sce()
 #' adt_profiles(ch12sce)

@@ -67,6 +67,7 @@ cache_citeseq_5k10k_tutvae = function() {
 
 #' helper to get the tutorial VAE for PBMCs from scvi-tools tutorial
 #' @param use_gpu logical(1), defaulting to FALSE, passed to TOTALVI.load
+#' @return python reference to anndata
 #' @examples
 #' get_citeseq_tutvae()
 #' @export
@@ -84,6 +85,7 @@ get_citeseq_tutvae = function(use_gpu=FALSE) {
 }
 
 #' helper to get the processed anndata for CITE-seq PBMCs from scvi-tools tutorial
+#' @return python reference to anndata
 #' @examples
 #' get_citeseq_5k10k_pbmcs()
 #' @export
@@ -106,6 +108,7 @@ get_citeseq_5k10k_pbmcs = function() {
 }
 
 #' get an anndata reference to 5k10k protein after totalVI from tutorial
+#' @return python reference to anndata
 #' @examples
 #' get_pro_5k10k_adata()
 #' @export
@@ -115,9 +118,10 @@ get_pro_5k10k_adata = function() {
 }
 
 #' get matrices of normalized quantifications from full totalVI 5k10k from tutorial
+#' @return list of matrices
 #' @examples
 #' nmlist = get_totalVI_normalized_5k10k()
-#' sapply(nmlist, dim)
+#' vapply(nmlist, dim, numeric(2))
 #' @export
 get_totalVI_normalized_5k10k = function() {
    ans = .osn_bucket_to_cache( "nmlzd_5k10k.rda" )
@@ -126,6 +130,7 @@ get_totalVI_normalized_5k10k = function() {
 }
 
 #' get anndata reference to full totalVI processing of 5k10k data
+#' @return python reference to anndata
 #' @examples
 #' full = get_totalVI_5k10k_adata()
 #' full
@@ -143,6 +148,7 @@ get_totalVI_5k10k_adata = function() {
 #' A metadata element (se.averaged) includes the result of averaging protein abundance
 #' estimates within ADT-based clusters, as is done to give rise to Figure 12.8 of
 #' the OSCA book.
+#' @return SingleCellExperiment instance
 #' @examples
 #' ch12sce = get_ch12sce()
 #' ch12sce
@@ -158,9 +164,10 @@ get_ch12sce = function() {
 #' antibody-derived tag (ADT) counts on 17 proteins.  The data are acquired and
 #' processed as described in ch 12 of the OSCA book, circa February 2023.
 #' List elements correspond to mRNA-based sub-clusters of ADT-based clusters.
+#' @return SimpleList of SingleCellExperiment instances
 #' @examples
 #' ch12_allsce = get_ch12_allsce()
-#' sapply(ch12_allsce, ncol)
+#' vapply(ch12_allsce, ncol, numeric(1))
 #' @export
 get_ch12_allsce = function() {
    ans = .osn_bucket_to_cache( "ch12_allsce.rda" )

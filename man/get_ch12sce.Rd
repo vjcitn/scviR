@@ -6,6 +6,9 @@
 \usage{
 get_ch12sce()
 }
+\value{
+SingleCellExperiment instance
+}
 \description{
 get SCE for 10k PBMC annotated as in OSCA book chapter 12
 }

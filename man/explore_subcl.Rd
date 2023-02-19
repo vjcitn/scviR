@@ -13,6 +13,9 @@ explore_subcl(sce, inlist, adtcls)
 
 \item{adtcls}{vector of ADT cluster assignments}
 }
+\value{
+used for shiny invocation
+}
 \description{
 app to explore diversity in RNA-subclusters within ADT clusters
 }

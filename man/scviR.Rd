@@ -6,6 +6,9 @@
 \usage{
 scviR()
 }
+\value{
+basiliskRun result with import from reticulate, typically a Module
+}
 \description{
 basic interface
 }

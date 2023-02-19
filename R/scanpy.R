@@ -1,6 +1,7 @@
 
 #' basic interface
 #' @importFrom reticulate import
+#' @return basiliskRun result with import from reticulate, typically a Module
 #' @examples
 #' sc = scanpyR()
 #' sc
@@ -15,6 +16,7 @@ scanpyR = function() {
 
 
 #' basic interface to anndata
+#' @return basiliskRun result with import from reticulate, typically a Module
 #' @examples
 #' ad = anndataR()
 #' ad

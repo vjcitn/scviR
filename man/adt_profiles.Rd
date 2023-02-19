@@ -21,6 +21,8 @@ defaults to false}
 }
 \value{
 ComplexHeatmap::pheatmap instance
+
+side effect of pheatmap::pheatmap call
 }
 \description{
 produce a heatmap from a specialized CITE-seq SingleCellExperiment

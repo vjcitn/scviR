@@ -9,7 +9,13 @@ Authors@R:
         comment = c(ORCID = "0000-0003-4046-0063")
      )
     )
-Description: experimental inferface from R to scvi-tools
+Description: This package definces inferfaces from R to scvi-tools.  A
+	vignette works through the totalVI tutorial for analyzing CITE-seq
+	data.  Another vignette compares outputs of Chapter 12 of the
+	OSCA book with analogous outputs based on totalVI quantifications.
+	Future work will address other components of scvi-tools, with a 
+	focus on building understanding of probabilistic methods based
+	on variational autoencoders.
 License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 4.2), basilisk, shiny, SingleCellExperiment
@@ -17,7 +23,7 @@ Imports: reticulate, BiocFileCache, utils, pheatmap,
 	SummarizedExperiment, S4Vectors, limma, scater
 Suggests: knitr, testthat, reshape2, ggplot2, rhdf5
 VignetteBuilder: knitr
-biocViews: Infrastructure
+biocViews: Infrastructure, SingleCell, DataImport
 RoxygenNote: 7.2.3
 URL: https://github.com/vjcitn/scviR
 BugReports: https://github.com/vjcitn/scviR/issues

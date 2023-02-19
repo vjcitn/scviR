@@ -6,6 +6,9 @@
 \usage{
 get_ch12_allsce()
 }
+\value{
+SimpleList of SingleCellExperiment instances
+}
 \description{
 get list of cluster-specific SCE for 10k PBMC annotated as in OSCA book chapter 12
 }
@@ -18,5 +21,5 @@ List elements correspond to mRNA-based sub-clusters of ADT-based clusters.
 }
 \examples{
 ch12_allsce = get_ch12_allsce()
-sapply(ch12_allsce, ncol)
+vapply(ch12_allsce, ncol, numeric(1))
 }

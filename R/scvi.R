@@ -1,6 +1,7 @@
 
 #' basic interface
 #' @importFrom reticulate import
+#' @return basiliskRun result with import from reticulate, typically a Module
 #' @examples
 #' scvi = scviR()
 #' scvi

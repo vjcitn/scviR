@@ -6,10 +6,13 @@
 \usage{
 get_totalVI_normalized_5k10k()
 }
+\value{
+list of matrices
+}
 \description{
 get matrices of normalized quantifications from full totalVI 5k10k from tutorial
 }
 \examples{
 nmlist = get_totalVI_normalized_5k10k()
-sapply(nmlist, dim)
+vapply(nmlist, dim, numeric(2))
 }

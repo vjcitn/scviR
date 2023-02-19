@@ -6,6 +6,9 @@
 \usage{
 get_totalVI_5k10k_adata()
 }
+\value{
+python reference to anndata
+}
 \description{
 get anndata reference to full totalVI processing of 5k10k data
 }

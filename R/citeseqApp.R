@@ -4,6 +4,7 @@
 #' @import SummarizedExperiment
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
 #' @param clname character(1) name of cluster SCE to assess
+#' @return limma::lmFit output
 #' @note It is assumed that 'logcounts' is an assay element,
 #' and that 'subcluster' is a colData element of each SCE in inlist
 #' @examples
@@ -49,6 +50,7 @@ get_subclustering_features = function(inlist, clname, n=20) {
 #' @param sce a SingleCellExperiment with altExp with ADT quantification
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
 #' @param adtcls vector of ADT cluster assignments
+#' @return used for shiny invocation
 #' @note TSNE should already be available in `altExp(sce)`; follow OSCA book 12.5.2.  If using
 #' example, set `ask=FALSE`.
 #' @examples

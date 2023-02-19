@@ -6,6 +6,9 @@
 \usage{
 get_pro_5k10k_adata()
 }
+\value{
+python reference to anndata
+}
 \description{
 get an anndata reference to 5k10k protein after totalVI from tutorial
 }
