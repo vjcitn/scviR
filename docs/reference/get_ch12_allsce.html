@@ -69,6 +69,12 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ch12_allsce</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>SimpleList of SingleCellExperiment instances</p>
+    </div>
     <div id="note">
     <h2>Note</h2>
     <p>This is a list of SingleCellExperiment instances with data on a total of 7472 cells from a 10x
@@ -81,7 +87,7 @@ List elements correspond to mRNA-based sub-clusters of ADT-based clusters.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ch12_allsce</span> <span class="op">=</span> <span class="fu">get_ch12_allsce</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">ch12_allsce</span>, <span class="va">ncol</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">ch12_allsce</span>, <span class="va">ncol</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   34  112  736  138 1351   67  879   57 1767  570   66 1032   37  416   30   33 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   17   18   19   20   21 </span>

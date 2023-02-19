@@ -69,11 +69,17 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_totalVI_normalized_5k10k</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>list of matrices</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">nmlist</span> <span class="op">=</span> <span class="fu">get_totalVI_normalized_5k10k</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">nmlist</span>, <span class="va">dim</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">nmlist</span>, <span class="va">dim</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      rna_nmlzd prot_nmlzd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]     10849      10849</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]      4000         14</span>
