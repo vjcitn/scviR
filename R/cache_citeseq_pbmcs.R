@@ -22,7 +22,7 @@ cache_citeseq_5k10k_pbmcs = function() {
   targ = paste0(td, "/demo2.h5ad.gz")
   download.file(gzdat, targ)
   system(paste("gunzip", targ))  # bad?
-  invisible(bfcrpath(ca, sub(".gz$", "", targ), action="move"))
+  invisible(bfcrpath(ca, sub(".gz$", "", targ), action="copy"))
 }
 
 #' grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
