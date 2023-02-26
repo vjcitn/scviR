@@ -53,7 +53,7 @@ cache_citeseq_5k10k_tutvae = function() {
   td = tempdir()
   targ = paste0(td, "/vae2_ov.zip")
   download.file(zdat, targ)
-  invisible(bfcrpath(ca, targ, action="move"))
+  invisible(bfcrpath(ca, targ, action="copy"))
 }
 #
 #
@@ -104,7 +104,7 @@ get_citeseq_5k10k_pbmcs = function() {
     target = paste0(prefix, folder, "/", entity)
     tf = tempfile(entity) # for metadata
     download.file(target, tf)
-    bfcrpath(ca, tf, action="move")
+    bfcrpath(ca, tf, action="copy")
 }
 
 #' get an anndata reference to 5k10k protein after totalVI from tutorial
