@@ -141,6 +141,7 @@ get_totalVI_5k10k_adata = function() {
 }
 
 #' get SCE for 10k PBMC annotated as in OSCA book chapter 12
+#' @param clear_cache logical(1) will delete relevant entries in available cache before continuing, defaults to FALSE
 #' @note This is a SingleCellExperiment instance with data on 7472 cells from a 10x
 #' CITE-seq experiment.  An altExp component includes
 #' antibody-derived tag (ADT) counts on 17 proteins.  The data are acquired and
@@ -153,7 +154,15 @@ get_totalVI_5k10k_adata = function() {
 #' ch12sce = get_ch12sce()
 #' ch12sce
 #' @export
-get_ch12sce = function() {
+get_ch12sce = function(clear_cache=FALSE) {
+   if (clear_cache) {
+     ca = BiocFileCache::BiocFileCache()
+     avail = bfcquery(ca, "ch12sce.rda")
+     if (nrow(avail)>0) {
+       to_kill = avail$rid
+       bfcremove(ca, to_kill)
+       }
+     }
    ans = .osn_bucket_to_cache( "ch12sce.rda" )
    get(load(ans))
 }

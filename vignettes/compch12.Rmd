@@ -37,7 +37,7 @@ library(scviR)
 ## Obtain key data representations
 
 ```{r getdat, message=FALSE}
-ch12sce = get_ch12sce()
+ch12sce = get_ch12sce(clear_cache=TRUE)
 ch12sce
 ```
 

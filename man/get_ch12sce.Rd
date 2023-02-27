@@ -4,7 +4,10 @@
 \alias{get_ch12sce}
 \title{get SCE for 10k PBMC annotated as in OSCA book chapter 12}
 \usage{
-get_ch12sce()
+get_ch12sce(clear_cache = FALSE)
+}
+\arguments{
+\item{clear_cache}{logical(1) will delete relevant entries in available cache before continuing, defaults to FALSE}
 }
 \value{
 SingleCellExperiment instance
