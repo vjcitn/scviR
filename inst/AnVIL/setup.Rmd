@@ -3,7 +3,7 @@ The scviR package should only be installed and used with
 PIP_USER=false
 ```
 in the `.Renviron` file read by Rstudio or the Jupyter R kernel.  With
-a fresh Rstudio-capable cloud environment
+a fresh Rstudio-capable cloud environment:
 
 ```
 BiocManager::install("vjcitn/scviR")
