@@ -1,16 +1,22 @@
-# Crucial post-installation step
+The scviR package should only be installed and used with 
 ```
 PIP_USER=false
 ```
-does not seem to obviate the need for the following.
+in the `.Renviron` file read by Rstudio or the Jupyter R kernel.  With
+a fresh Rstudio-capable cloud environment
 
-- BiocManager::install("vjcitn/scviR")
-- library(scviR)
-- scvi = scviR() # will use basilisk to set up miniconda
+```
+BiocManager::install("vjcitn/scviR")
+library(scviR)
+scvi = scviR() # will use basilisk to set up miniconda
+```
 
-but the necessary packages are installed in .local rather than .cache
+the necessary packages will be installed in .local rather than .cache if
+`PIP_USER` is true.
 
-To solve this:
+If  `.Renviron` cannot be modified, the following workaround
+can be used, but attend to the versions which may not be accurate
+as packages evolve:
 
 ```
 export nn=`find .cache/R/basilisk/1.10.2/scviR -name site-packages`
