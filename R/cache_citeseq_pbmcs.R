@@ -12,14 +12,14 @@
 #' @export
 cache_citeseq_5k10k_pbmcs = function() {
   ca = BiocFileCache()
-  pa = bfcquery(ca, "demo2.h5ad")
+  pa = bfcquery(ca, "pbmc_citeseq_5k10k.h5ad")
 # returns tibble
-  if (nrow(pa)>1) stop("demo2.h5ad has multiple instances in cache, please inspect.")
+  if (nrow(pa)>1) stop("pbmc_citeseq_5k10k.h5ad has multiple instances in cache, please inspect.")
   else if (nrow(pa)==1) return(pa$rpath)
 # we need to retrieve if we get here
-  gzdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/demo2.h5ad.gz"
+  gzdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/pbmc_citeseq_5k10k.h5ad.gz"
   td = tempdir()
-  targ = paste0(td, "/demo2.h5ad.gz")
+  targ = paste0(td, "/pbmc_citeseq_5k10k.h5ad.gz")
   download.file(gzdat, targ)
   system(paste("gunzip", targ))  # bad?
   invisible(bfcrpath(ca, sub(".gz$", "", targ), action="copy"))
@@ -189,7 +189,7 @@ get_ch12_allsce = function() {
 #  targ = paste0(td, "/demo1.h5ad.gz")
 #  download.file(gzdat, targ)
 #  system(paste("gunzip", targ))  # bad?
-#  invisible(bfcrpath(ca, sub(".gz$", "", targ), action="move"))
+#  invisible(bfcrpath(ca, sub(".gz$", "", targ), action="copy"))
 #191170194 BiocScviR/nmlzd_5k10k.rda
 #  3677260 BiocScviR/pbmc5k10k_pro_adata.h5ad
 #
