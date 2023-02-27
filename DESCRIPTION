@@ -21,7 +21,7 @@ Encoding: UTF-8
 Depends: R (>= 4.2), basilisk, shiny, SingleCellExperiment
 Imports: reticulate, BiocFileCache, utils, pheatmap,
 	SummarizedExperiment, S4Vectors, limma, scater
-Suggests: knitr, testthat, reshape2, ggplot2, rhdf5
+Suggests: knitr, testthat, reshape2, ggplot2, rhdf5, BiocStyle
 VignetteBuilder: knitr
 biocViews: Infrastructure, SingleCell, DataImport
 RoxygenNote: 7.2.3
