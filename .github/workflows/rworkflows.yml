@@ -4,6 +4,7 @@ name: rworkflows
     branches:
     - master
     - main
+    - extras
     - RELEASE_**
   pull_request:
     branches:
