@@ -8,7 +8,7 @@
 factor
 }
 \usage{
-clusters.rna
+data(clusters.rna)
 }
 \description{
 mRNA-based cluster labels for 7472 cells in OSCA chapter 12 analysis

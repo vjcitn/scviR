@@ -8,7 +8,7 @@
 factor
 }
 \usage{
-clusters.adt
+data(clusters.adt)
 }
 \description{
 ADT-based cluster labels for 7472 cells in OSCA chapter 12 analysis
