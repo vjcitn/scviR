@@ -26,7 +26,7 @@ CITE-seq experiments from the scvi-tools data repository.
 library(scviR)
 library(ggplot2)
 library(reshape2)
-adref = get_citeseq_5k10k_pbmcs()
+adref = getCiteseq5k10kPbmcs()
 adref
 ```
 
@@ -37,7 +37,7 @@ with these data.  A fitted version is retrieved and cached
 using
 
 ```{r dogetv}
-vae = get_citeseq_tutvae()
+vae = getCiteseqTutvae()
 class(vae)
 ```
 
@@ -77,7 +77,7 @@ NE = vae$get_normalized_expression(n_samples=25L,
 ```
 We provide the totalVI-based denoised quantities in
 ```{r getdenoise}
-denoised = get_totalVI_normalized_5k10k()
+denoised = getTotalVINormalized5k10k()
 vapply(denoised, dim, integer(2))
 ```
 Note that these have features as columns, samples (cells)
@@ -96,7 +96,7 @@ do not agree exactly with what I see in the colab pages for
 0.18.0 and 0.19.0.  The process was run in Jetstream2, not in colab.
 
 ```{r getproj, fig.height=6}
-full = get_totalVI_5k10k_adata()
+full = getTotalVI5k10kAdata()
 # class distribution
 cllabs = full$obs$leiden_totalVI
 blabs = full$obs$batch
@@ -132,4 +132,10 @@ ggplot(mm, aes(x=umap1, y=umap2, colour=log1p(value))) +
 The structure of the VAE is reported using
 ```{r lkmod2, eval=TRUE}
 vae$module
+```
+
+# Session information
+
+```{r lksess}
+sessionInfo()
 ```

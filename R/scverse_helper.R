@@ -1,8 +1,9 @@
 #' helper to get text from python help utility -- may need handling through basilisk
 #' @import reticulate
 #' @param object a reference to a python module typically with class 'python.builtin.module'
+#' @return character vector of lines from python help result
 #' @export
-py_help2 = function (object) 
+pyHelp2 = function (object) 
 {
     help <- reticulate::py_capture_output(reticulate::import_builtins()$help(object), 
         type = "stdout")
@@ -15,8 +16,9 @@ py_help2 = function (object)
 
 #' shiny app that helps access documentation on python-accessible components
 #' @import shiny
+#' @return shinyApp instance
 #' @export
-scverse_helper = function() {
+scverseHelper = function() {
   scvi = scviR()
   scanpy = scanpyR()
   
@@ -47,13 +49,13 @@ scverse_helper = function() {
    output$pickedmodule = renderUI({
     validate(need(length(input$topmods)==1L, "make a selection"))
     att = try(current()[[input$topmods]], silent=TRUE)
-    validate(need(class(att)[1] != "python.builtin.function", "function"))
+    validate(need(!inherits(att[1],  "python.builtin.function"), "can't process function"))
     validate(need(!inherits(att, "try-error") && !is.null(att), "cannot extract input$topmods, try another"))
     radioButtons("lev2", "subtop", choices=names(att), inline=TRUE)
     })
    output$toptext = renderText({
     validate(need(length(input$topmods)==1L, "make a selection"))
-    py_help2(current()) # [[input$topmods]])
+    pyHelp2(current()) # [[input$topmods]])
     }, sep="<br>")
    output$subtext = renderText({
     validate(need(length(input$lev2)==1L, "make a level 2 selection"))
@@ -63,7 +65,7 @@ scverse_helper = function() {
     att = try(current()[[input$topmods]][[input$lev2]], silent=TRUE)
  
     validate(need(!inherits(att, "try-error"), "cannot extract second level, try another"))
-    py_help2(att)
+    pyHelp2(att)
     }, sep="<br>")
   
   # deal with stop button
@@ -98,5 +100,5 @@ be used but documentation is not available in this app at present."))
     )
    )
   
-  runApp(list(ui=ui, server=server))
+  shinyApp(ui=ui, server=server)
 }

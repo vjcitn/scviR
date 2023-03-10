@@ -8,11 +8,11 @@
 #' @note It is assumed that 'logcounts' is an assay element,
 #' and that 'subcluster' is a colData element of each SCE in inlist
 #' @examples
-#' all.sce = get_ch12_allsce()
-#' lm3 = get_subcl_LM(all.sce, "3")
+#' all.sce = getCh12AllSce()
+#' lm3 = getSubclLM(all.sce, "3")
 #' names(lm3)
 #' @export
-get_subcl_LM = function(inlist, clname) {
+getSubclLM = function(inlist, clname) {
   se = inlist[[clname]]
   x = SummarizedExperiment::assay(se, "logcounts")
   mm = model.matrix(~subcluster, data=as.data.frame(colData(se)))
@@ -26,12 +26,12 @@ get_subcl_LM = function(inlist, clname) {
 #' @return list with two elements, feat = rowData corresponding to variable genes, stats = topTable result
 #' @note Symbol will be taken from feat and placed in stats component if available
 #' @examples
-#' all.sce = get_ch12_allsce()
-#' scl = get_subclustering_features(all.sce, "3", 10)
+#' all.sce = getCh12AllSce()
+#' scl = getSubclusteringFeatures(all.sce, "3", 10)
 #' names(scl)
 #' @export
-get_subclustering_features = function(inlist, clname, n=20) {
-  lm1 = get_subcl_LM( inlist, clname )
+getSubclusteringFeatures = function(inlist, clname, n=20) {
+  lm1 = getSubclLM( inlist, clname )
   p = seq(2, ncol(lm1$coef)) # to get F stats
   suppressWarnings({
     lm1 = eBayes(lm1) # lots of zeroes
@@ -50,18 +50,18 @@ get_subclustering_features = function(inlist, clname, n=20) {
 #' @param sce a SingleCellExperiment with altExp with ADT quantification
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
 #' @param adtcls vector of ADT cluster assignments
-#' @return used for shiny invocation
+#' @return shinyApp instance
 #' @note TSNE should already be available in `altExp(sce)`; follow OSCA book 12.5.2.  If using
 #' example, set `ask=FALSE`.
 #' @examples
 #' \dontrun{
-#'  sce = get_ch12sce()
-#'  all.sce = get_ch12_allsce()
+#'  sce = getCh12Sce()
+#'  all.sce = getCh12AllSce()
 #'  data(clusters.adt)
-#'  explore_subcl( sce, all.sce, clusters.adt )  # trips up interactive pkgdown?
+#'  runApp(exploreSubcl( sce, all.sce, clusters.adt )  # trips up interactive pkgdown?)
 #' }
 #' @export
-explore_subcl = function( sce, inlist, adtcls ) {
+exploreSubcl = function( sce, inlist, adtcls ) {
  ui = fluidPage(
   sidebarLayout(
    sidebarPanel(
@@ -105,7 +105,7 @@ abundance for selected genes and a given protein in the ADT panel."))
    pheatmap::pheatmap(avg - rowMeans(avg), breaks=seq(-3, 3, length.out=101))
    })
   featdata = reactive({
-     get_subclustering_features(inlist, input$clpick, n=10) 
+     getSubclusteringFeatures(inlist, input$clpick, n=10) 
      })
   output$feats = renderUI({
     scl = featdata()$feat
@@ -129,7 +129,7 @@ abundance for selected genes and a given protein in the ADT panel."))
          swap_rownames = "Symbol", ncol=length(input$genes))
     })
  }
- runApp(list(ui=ui, server=server))
+ shinyApp(ui=ui, server=server)
 }
    
 

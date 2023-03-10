@@ -1,7 +1,7 @@
 Package: scviR
-Date: 2023-02-27
+Date: 2023-03-07
 Title: experimental inferface from R to scvi-tools
-Version: 0.99.4
+Version: 0.99.7
 Authors@R: 
     c(person(
         "Vincent", "Carey", role = c("aut", "cre"),
@@ -18,7 +18,7 @@ Description: This package defines interfaces from R to scvi-tools.  A
 	on variational autoencoders.
 License: Artistic-2.0
 Encoding: UTF-8
-Depends: R (>= 4.2), basilisk, shiny, SingleCellExperiment
+Depends: R (>= 4.3), basilisk, shiny, SingleCellExperiment
 Imports: reticulate, BiocFileCache, utils, pheatmap,
 	SummarizedExperiment, S4Vectors, limma, scater
 Suggests: knitr, testthat, reshape2, ggplot2, rhdf5, BiocStyle
