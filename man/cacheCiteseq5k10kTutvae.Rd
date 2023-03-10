@@ -13,21 +13,21 @@ invisibly, the path to the .zip file holding the fitted VAE and associated data
 grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
 }
 \note{
-VAE construction followed tutorial at 
+VAE construction followed tutorial at
 `https://docs.scvi-tools.org/en/stable/tutorials/notebooks/totalVI.html`.
 
 It may be advantageous to set `options(timeout=3600)` or to allow an even greater
 time for internet downloads, if working at a relatively slow network connection.
 }
 \examples{
-zpath = cacheCiteseq5k10kTutvae()
-td = tempdir()
-utils::unzip(zpath, exdir=td)
-vaedir = paste0(td, "/vae2_ov")
-scvi = scviR()
-adm = anndataR()
-hpath = cacheCiteseq5k10kPbmcs()
-adata = adm$read(hpath)
-mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=FALSE)
+zpath <- cacheCiteseq5k10kTutvae()
+td <- tempdir()
+utils::unzip(zpath, exdir = td)
+vaedir <- paste0(td, "/vae2_ov")
+scvi <- scviR()
+adm <- anndataR()
+hpath <- cacheCiteseq5k10kPbmcs()
+adata <- adm$read(hpath)
+mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu = FALSE)
 mod
 }

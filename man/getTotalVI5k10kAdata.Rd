@@ -13,6 +13,6 @@ python reference to anndata
 get anndata reference to full totalVI processing of 5k10k data
 }
 \examples{
-full = getTotalVI5k10kAdata()
+full <- getTotalVI5k10kAdata()
 full
 }

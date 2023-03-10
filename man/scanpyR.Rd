@@ -13,7 +13,7 @@ basiliskRun result with import from reticulate, typically a Module
 basic interface
 }
 \examples{
-sc = scanpyR()
+sc <- scanpyR()
 sc
 sc$pp
 }

@@ -27,6 +27,11 @@ Chapter 12 of the OSCA book analyzes only the 10k dataset.
 
 # Technical steps to facilitate comparison
 
+The following subsections are essentially "code-only".  We
+exhibit steps necessary to assemble a SingleCellExperiment
+instance with the subset of the totalVI quantifications
+produced for the cells from the "10k" dataset.
+
 ## Acquire software
 ```{r getsoft, message=FALSE}
 library(SingleCellExperiment)

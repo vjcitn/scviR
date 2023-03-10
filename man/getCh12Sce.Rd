@@ -25,6 +25,6 @@ estimates within ADT-based clusters, as is done to give rise to Figure 12.8 of
 the OSCA book.
 }
 \examples{
-ch12sce = getCh12Sce()
+ch12sce <- getCh12Sce()
 ch12sce
 }

@@ -22,9 +22,14 @@ single-cell omics data analysis.
 
 The scviR package is a very elementary approach to interfacing
 between R, Bioconductor and scvi-tools.  The long-term plan is to
-illustrate several aspects of variational inference applied to single
+illustrate several aspects of variational inference (VI) applied to single
 cell genomics in a way
 that is convenient for Bioconductor users.
+
+The package makes use of SingleCellExperiment and anndata
+representations of single-cell genomic assays.
+
+Several points should be kept in mind when using this package:
 
 - scvi-tools components develop rapidly; we are
 using [basilisk](https://bioconductor.org/packages/basilisk)
@@ -36,12 +41,14 @@ the [NVIDIA container registry](nvcr.io/nvidia/pytorch:22.12-py3) includes
 R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.20.0
 and scviR 0.0.2.  A Dockerfile is in scviR/inst/Docker;
 `vjcitn/nvidpt_bioc:0.0.2` can be pulled from dockerhub, it reports
-size 26.5GB.  
+size 26.5GB.  Container resources will be updated as needed.  Users
+should file issues at the package GitHub [repo](https://github.com/vjcitn/scviR)
+if the container is stale.
 - Code presented in the cite-seq tutorial
 vignette follows [the colab notebook
 for scvi-tools 0.18.0](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb).  *We will check for modifications in the scvi-tools 0.20.0 notebook*.
 - Additional work on this package will facilitate comparisons between
-outcomes of Bioconductor, scVI, and other analytic toolkits in the
+outcomes of Bioconductor, scVI, and other VI-oriented analytic toolkits in the
 single-cell domain.
 
 # Installation and use

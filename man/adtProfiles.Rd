@@ -31,7 +31,7 @@ produce a heatmap from a specialized CITE-seq SingleCellExperiment
 See the OSCA book ch12.5.2 for the application.
 }
 \examples{
-ch12sce = getCh12Sce()
+ch12sce <- getCh12Sce()
 adtProfiles(ch12sce)
 adtProfiles(ch12sce, do_z = TRUE)
 }

@@ -13,7 +13,7 @@ basiliskRun result with import from reticulate, typically a Module
 basic interface to anndata
 }
 \examples{
-ad = anndataR()
+ad <- anndataR()
 ad
 ad$read
 }

@@ -21,8 +21,8 @@ It may be advantageous to set `options(timeout=3600)` or to allow an even greate
 time for internet downloads, if working at a relatively slow network connection.
 }
 \examples{
-h5path = cacheCiteseq5k10kPbmcs()
-cmeta = rhdf5::h5ls(h5path)
+h5path <- cacheCiteseq5k10kPbmcs()
+cmeta <- rhdf5::h5ls(h5path)
 dim(cmeta)
 head(cmeta, 17)
 }

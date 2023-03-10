@@ -13,6 +13,6 @@ list of matrices
 get matrices of normalized quantifications from full totalVI 5k10k from tutorial
 }
 \examples{
-nmlist = getTotalVINormalized5k10k()
+nmlist <- getTotalVINormalized5k10k()
 vapply(nmlist, dim, numeric(2))
 }

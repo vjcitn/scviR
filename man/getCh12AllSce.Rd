@@ -20,6 +20,6 @@ processed as described in ch 12 of the OSCA book, circa February 2023.
 List elements correspond to mRNA-based sub-clusters of ADT-based clusters.
 }
 \examples{
-ch12_allsce = getCh12AllSce()
+ch12_allsce <- getCh12AllSce()
 vapply(ch12_allsce, ncol, numeric(1))
 }
