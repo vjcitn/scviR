@@ -22,6 +22,9 @@
     <loc>https://github.com/vjcitn/scviR/index.html</loc>
   </url>
   <url>
+    <loc>https://github.com/vjcitn/scviR/reference/adtProfiles.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/vjcitn/scviR/reference/adt_profiles.html</loc>
   </url>
   <url>
@@ -29,6 +32,12 @@
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/bsklenv.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/cacheCiteseq5k10kPbmcs.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/cacheCiteseq5k10kTutvae.html</loc>
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/cache_citeseq_5k10k_pbmcs.html</loc>
@@ -43,7 +52,37 @@
     <loc>https://github.com/vjcitn/scviR/reference/clusters.rna.html</loc>
   </url>
   <url>
+    <loc>https://github.com/vjcitn/scviR/reference/exploreSubcl.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/vjcitn/scviR/reference/explore_subcl.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getCh12AllSce.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getCh12Sce.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getCiteseq5k10kPbmcs.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getCiteseqTutvae.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getPro5k10kAdata.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getSubclLM.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getSubclusteringFeatures.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getTotalVI5k10kAdata.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/getTotalVINormalized5k10k.html</loc>
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/get_ch12_allsce.html</loc>
@@ -76,7 +115,13 @@
     <loc>https://github.com/vjcitn/scviR/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://github.com/vjcitn/scviR/reference/pyHelp2.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/vjcitn/scviR/reference/scanpyR.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/vjcitn/scviR/reference/scverseHelper.html</loc>
   </url>
   <url>
     <loc>https://github.com/vjcitn/scviR/reference/scviR.html</loc>

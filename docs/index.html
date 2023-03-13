@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">scviR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.9</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
 <li>scviR defines python infrastructure via the <a href="https://bioconductor.org/packages/basilisk" class="external-link">basilisk</a> discipline; the main python dependencies are declared in <code>R/basilisk.R</code>.</li>
 <li>We have collected a number of intermediate results so that the outputs of totalVI (and other VI procedures) can be explored without taking the time to fit the model. An example in the CITE-seq domain is the anndata instance for the 5k-10k PBMC dataset with representations of the latent space, cluster assignments, and UMAP projection:</li>
 </ul>
-<pre><code>&gt; tot = get_totalVI_5k10k_adata() # retrieved on first call from Open Storage Network, cached
+<pre><code>&gt; tot = getTotalVI5k10kAdata() # retrieved on first call from Open Storage Network, cached
 &gt; tot
 AnnData object with n_obs × n_vars = 10849 × 4000
     obs: 'n_genes', 'percent_mito', 'n_counts', 'batch', '_scvi_labels', '_scvi_batch', 'leiden_totalVI'

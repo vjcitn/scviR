@@ -70,5 +70,5 @@ functions
 # Session information
 
 ```{r lksess}
-sessionInfo()
+utils::sessionInfo()
 ```

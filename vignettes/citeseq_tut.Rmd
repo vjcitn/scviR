@@ -186,5 +186,5 @@ vae$module
 # Session information
 
 ```{r lksess}
-sessionInfo()
+utils::sessionInfo()
 ```

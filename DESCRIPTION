@@ -18,7 +18,7 @@ Description: This package defines interfaces from R to scvi-tools.  A
 	on variational autoencoders.
 License: Artistic-2.0
 Encoding: UTF-8
-Depends: R (>= 4.3), basilisk, shiny, SingleCellExperiment
+Depends: R (>= 4.3), basilisk, shiny, SingleCellExperiment, utils
 Imports: reticulate, BiocFileCache, utils, pheatmap,
 	SummarizedExperiment, S4Vectors, limma, scater
 Suggests: knitr, testthat, reshape2, ggplot2, rhdf5, BiocStyle
