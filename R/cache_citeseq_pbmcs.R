@@ -3,141 +3,161 @@
 #' @note Original h5ad files obtained using scvi-tools 0.18.0 scvi.data.pbmcs_10x_cite_seq,
 #' then processed according to steps in the scviR vignette, which follow the
 #' [scvi-tools tutorial](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb) by Gayoso et al.
+#' @note It may be advantageous to set `options(timeout=3600)` or to allow an even greater
+#' time for internet downloads, if working at a relatively slow network connection.
 #' @return invisibly, the path to the .h5ad file
 #' @examples
-#' h5path = cache_citeseq_5k10k_pbmcs()
-#' cmeta = rhdf5::h5ls(h5path)
+#' h5path <- cacheCiteseq5k10kPbmcs()
+#' cmeta <- rhdf5::h5ls(h5path)
 #' dim(cmeta)
 #' head(cmeta, 17)
 #' @export
-cache_citeseq_5k10k_pbmcs = function() {
-  ca = BiocFileCache()
-  pa = bfcquery(ca, "pbmc_citeseq_5k10k.h5ad")
-# returns tibble
-  if (nrow(pa)>1) stop("pbmc_citeseq_5k10k.h5ad has multiple instances in cache, please inspect.")
-  else if (nrow(pa)==1) return(pa$rpath)
-# we need to retrieve if we get here
-  gzdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/pbmc_citeseq_5k10k.h5ad.gz"
-  td = tempdir()
-  targ = paste0(td, "/pbmc_citeseq_5k10k.h5ad.gz")
+cacheCiteseq5k10kPbmcs <- function() {
+  ca <- BiocFileCache()
+  pa <- bfcquery(ca, "pbmc_citeseq_5k10k.h5ad")
+  # returns tibble
+  if (nrow(pa) > 1) {
+    stop("pbmc_citeseq_5k10k.h5ad has multiple instances in cache, please inspect.")
+  } else if (nrow(pa) == 1) {
+    return(pa$rpath)
+  }
+  # we need to retrieve if we get here
+  gzdat <- "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/pbmc_citeseq_5k10k.h5ad.gz"
+  td <- tempdir()
+  targ <- paste0(td, "/pbmc_citeseq_5k10k.h5ad.gz")
   download.file(gzdat, targ)
-  system(paste("gunzip", targ))  # bad?
-  invisible(bfcrpath(ca, sub(".gz$", "", targ), action="copy"))
+  system(paste("gunzip", targ)) # bad?
+  invisible(bfcrpath(ca, sub(".gz$", "", targ), action = "copy"))
 }
 
 #' grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
 #' @import BiocFileCache
 #' @importFrom utils unzip
-#' @note VAE construction followed tutorial at 
+#' @note VAE construction followed tutorial at
 #' `https://docs.scvi-tools.org/en/stable/tutorials/notebooks/totalVI.html`.
+#' @note It may be advantageous to set `options(timeout=3600)` or to allow an even greater
+#' time for internet downloads, if working at a relatively slow network connection.
 #' @return invisibly, the path to the .zip file holding the fitted VAE and associated data
 #' @examples
-#' zpath = cache_citeseq_5k10k_tutvae()
-#' td = tempdir()
-#' utils::unzip(zpath, exdir=td)
-#' vaedir = paste0(td, "/vae2_ov")
-#' scvi = scviR()
-#' adm = anndataR()
-#' hpath = cache_citeseq_5k10k_pbmcs()
-#' adata = adm$read(hpath)
-#' mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=FALSE)
+#' zpath <- cacheCiteseq5k10kTutvae()
+#' td <- tempdir()
+#' utils::unzip(zpath, exdir = td)
+#' vaedir <- paste0(td, "/vae2_ov")
+#' scvi <- scviR()
+#' adm <- anndataR()
+#' hpath <- cacheCiteseq5k10kPbmcs()
+#' adata <- adm$read(hpath)
+#' mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu = FALSE)
 #' mod
 #' @export
-cache_citeseq_5k10k_tutvae = function() {
-  ca = BiocFileCache()
-  pa = bfcquery(ca, "vae2_ov.zip")
-# returns tibble
-  if (nrow(pa)>1) stop("vae2_ov.zip has multiple instances in cache, please inspect.")
-  else if (nrow(pa)==1) return(pa$rpath)
-  zdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/vae2_ov.zip"
-  td = tempdir()
-  targ = paste0(td, "/vae2_ov.zip")
+cacheCiteseq5k10kTutvae <- function() {
+  ca <- BiocFileCache()
+  pa <- bfcquery(ca, "vae2_ov.zip")
+  # returns tibble
+  if (nrow(pa) > 1) {
+    stop("vae2_ov.zip has multiple instances in cache, please inspect.")
+  } else if (nrow(pa) == 1) {
+    return(pa$rpath)
+  }
+  zdat <- "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/vae2_ov.zip"
+  td <- tempdir()
+  targ <- paste0(td, "/vae2_ov.zip")
   download.file(zdat, targ)
-  invisible(bfcrpath(ca, targ, action="copy"))
+  invisible(bfcrpath(ca, targ, action = "copy"))
 }
 #
 #
 #
 #
-#Parameter validation failed:
-#stvjc@stvjc-XPS-13-9300:~/YOSEF_Variational/scviR/R$ docker run -v /home/stvjc/OSN:/data -v /home/stvjc/RC2:/config/rclone -ti rclone/rclone:latest ls osn:/bir190004-bucket01/BiocScviR/
+# Parameter validation failed:
+# stvjc@stvjc-XPS-13-9300:~/YOSEF_Variational/scviR/R$ docker run -v /home/stvjc/OSN:/data -v /home/stvjc/RC2:/config/rclone -ti rclone/rclone:latest ls osn:/bir190004-bucket01/BiocScviR/
 # 51842190 demo1.h5ad.gz
 # 16477930 vae1_ov.zip
-#st
+# st
 
 #' helper to get the tutorial VAE for PBMCs from scvi-tools tutorial
 #' @param use_gpu logical(1), defaulting to FALSE, passed to TOTALVI.load
 #' @return python reference to anndata
 #' @examples
-#' get_citeseq_tutvae()
+#' getCiteseqTutvae()
 #' @export
-get_citeseq_tutvae = function(use_gpu=FALSE) {
-   zpath = cache_citeseq_5k10k_tutvae()
-   td = tempdir()
-   unzip(zpath, exdir=td)
-   vaedir = paste0(td, "/vae2_ov")
-   scvi = scviR()
-   adm = anndataR()
-   hpath = cache_citeseq_5k10k_pbmcs()
-   adata = adm$read(hpath)
-   mod = scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu=use_gpu)
-   mod
+getCiteseqTutvae <- function(use_gpu = FALSE) {
+  zpath <- cacheCiteseq5k10kTutvae()
+  td <- tempdir()
+  unzip(zpath, exdir = td)
+  vaedir <- paste0(td, "/vae2_ov")
+  scvi <- scviR()
+  adm <- anndataR()
+  hpath <- cacheCiteseq5k10kPbmcs()
+  adata <- adm$read(hpath)
+  mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu = use_gpu)
+  mod
 }
 
 #' helper to get the processed anndata for CITE-seq PBMCs from scvi-tools tutorial
 #' @return python reference to anndata
+#' @note It may be advantageous to set `options(timeout=3600)` or to allow an even greater
+#' time for internet downloads, if working at a relatively slow network connection.
 #' @examples
-#' get_citeseq_5k10k_pbmcs()
+#' getCiteseq5k10kPbmcs()
 #' @export
-get_citeseq_5k10k_pbmcs = function() {
-   h5path = cache_citeseq_5k10k_pbmcs()
-   anndataR()$read(h5path)
+getCiteseq5k10kPbmcs <- function() {
+  h5path <- cacheCiteseq5k10kPbmcs()
+  anndataR()$read(h5path)
 }
 
-.osn_bucket_to_cache = function(entity, folder="BiocScviR",
-    prefix="https://mghp.osn.xsede.org/bir190004-bucket01/",
+.osn_bucket_to_cache <- function(
+    entity, folder = "BiocScviR",
+    prefix = "https://mghp.osn.xsede.org/bir190004-bucket01/",
     ca = BiocFileCache::BiocFileCache()) {
-    pa = bfcquery(ca, entity)
-    if (nrow(pa)>1) stop(sprintf("%s has multiple instances in cache, please inspect.",
-               entity))
-    else if (nrow(pa)==1) return(pa$rpath)
-    target = paste0(prefix, folder, "/", entity)
-    tf = tempfile(entity) # for metadata
-    download.file(target, tf)
-    bfcrpath(ca, tf, action="copy")
+  pa <- bfcquery(ca, entity)
+  if (nrow(pa) > 1) {
+    stop(sprintf(
+      "%s has multiple instances in cache, please inspect.",
+      entity
+    ))
+  } else if (nrow(pa) == 1) {
+    return(pa$rpath)
+  }
+  target <- paste0(prefix, folder, "/", entity)
+  tf <- tempfile(entity) # for metadata
+  download.file(target, tf)
+  bfcrpath(ca, tf, action = "copy")
 }
 
 #' get an anndata reference to 5k10k protein after totalVI from tutorial
+#' @note It may be advantageous to set `options(timeout=3600)` or to allow an even greater
+#' time for internet downloads, if working at a relatively slow network connection.
 #' @return python reference to anndata
 #' @examples
-#' get_pro_5k10k_adata()
+#' getPro5k10kAdata()
 #' @export
-get_pro_5k10k_adata = function() {
-   ans = .osn_bucket_to_cache( "pbmc5k10k_pro_adata.h5ad" )
-   anndataR()$read(ans)
+getPro5k10kAdata <- function() {
+  ans <- .osn_bucket_to_cache("pbmc5k10k_pro_adata.h5ad")
+  anndataR()$read(ans)
 }
 
 #' get matrices of normalized quantifications from full totalVI 5k10k from tutorial
 #' @return list of matrices
 #' @examples
-#' nmlist = get_totalVI_normalized_5k10k()
+#' nmlist <- getTotalVINormalized5k10k()
 #' vapply(nmlist, dim, numeric(2))
 #' @export
-get_totalVI_normalized_5k10k = function() {
-   ans = .osn_bucket_to_cache( "nmlzd_5k10k.rda" )
-   load(ans, envir=.GlobalEnv)
-   get("nmlzd_5k10k")
+getTotalVINormalized5k10k <- function() {
+  ans <- .osn_bucket_to_cache("nmlzd_5k10k.rda")
+  load(ans, envir = .GlobalEnv)
+  get("nmlzd_5k10k")
 }
 
 #' get anndata reference to full totalVI processing of 5k10k data
 #' @return python reference to anndata
 #' @examples
-#' full = get_totalVI_5k10k_adata()
+#' full <- getTotalVI5k10kAdata()
 #' full
 #' @export
-get_totalVI_5k10k_adata = function() {
-   ans = .osn_bucket_to_cache( "full_5k10k_totalVI.h5ad" )
-   anndataR()$read(ans)
+getTotalVI5k10kAdata <- function() {
+  ans <- .osn_bucket_to_cache("full_5k10k_totalVI.h5ad")
+  anndataR()$read(ans)
 }
 
 #' get SCE for 10k PBMC annotated as in OSCA book chapter 12
@@ -151,20 +171,20 @@ get_totalVI_5k10k_adata = function() {
 #' the OSCA book.
 #' @return SingleCellExperiment instance
 #' @examples
-#' ch12sce = get_ch12sce()
+#' ch12sce <- getCh12Sce()
 #' ch12sce
 #' @export
-get_ch12sce = function(clear_cache=FALSE) {
-   if (clear_cache) {
-     ca = BiocFileCache::BiocFileCache()
-     avail = bfcquery(ca, "ch12sce.rda")
-     if (nrow(avail)>0) {
-       to_kill = avail$rid
-       bfcremove(ca, to_kill)
-       }
-     }
-   ans = .osn_bucket_to_cache( "ch12sce.rda" )
-   get(load(ans))
+getCh12Sce <- function(clear_cache = FALSE) {
+  if (clear_cache) {
+    ca <- BiocFileCache::BiocFileCache()
+    avail <- bfcquery(ca, "ch12sce.rda")
+    if (nrow(avail) > 0) {
+      to_kill <- avail$rid
+      bfcremove(ca, to_kill)
+    }
+  }
+  ans <- .osn_bucket_to_cache("ch12sce.rda")
+  get(load(ans))
 }
 
 #' get list of cluster-specific SCE for 10k PBMC annotated as in OSCA book chapter 12
@@ -175,30 +195,10 @@ get_ch12sce = function(clear_cache=FALSE) {
 #' List elements correspond to mRNA-based sub-clusters of ADT-based clusters.
 #' @return SimpleList of SingleCellExperiment instances
 #' @examples
-#' ch12_allsce = get_ch12_allsce()
+#' ch12_allsce <- getCh12AllSce()
 #' vapply(ch12_allsce, ncol, numeric(1))
 #' @export
-get_ch12_allsce = function() {
-   ans = .osn_bucket_to_cache( "ch12_allsce.rda" )
-   get(load(ans))
+getCh12AllSce <- function() {
+  ans <- .osn_bucket_to_cache("ch12_allsce.rda")
+  get(load(ans))
 }
-
-
-#
-#get_totalVI_normalized_5k10k = function() {
-#  ca = BiocFileCache()
-#  pa = bfcquery(ca, "nmlzd_5k10k.rda")
-#  if (nrow(pa)>1) stop("demo1.h5ad has multiple instances in cache, please inspect.")
-## returns tibble
-#  if (nrow(pa)>1) stop("demo1.h5ad has multiple instances in cache, please inspect.")
-#  else if (nrow(pa)==1) return(pa$rpath)
-## we need to retrieve if we get here
-#  gzdat = "https://mghp.osn.xsede.org/bir190004-bucket01/BiocScviR/demo1.h5ad.gz"
-#  td = tempdir()
-#  targ = paste0(td, "/demo1.h5ad.gz")
-#  download.file(gzdat, targ)
-#  system(paste("gunzip", targ))  # bad?
-#  invisible(bfcrpath(ca, sub(".gz$", "", targ), action="copy"))
-#191170194 BiocScviR/nmlzd_5k10k.rda
-#  3677260 BiocScviR/pbmc5k10k_pro_adata.h5ad
-#
