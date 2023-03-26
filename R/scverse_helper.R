@@ -154,6 +154,7 @@ ui = fluidPage(
   sidebarPanel(
    helpText("Get an overview of resources available from scvi-tools"),
    radioButtons("toplev", "components", choices=names(nmcl)),
+   actionButton("btnSend", "Stop app"),
    width=2),
   mainPanel(
    tabsetPanel(
@@ -179,6 +180,14 @@ server = function(input, output) {
     m2 = pylist2[[ input$toplev ]][[input$sec]]
     pyHelp2( m2 )
     }, sep="<br>")
+    # deal with stop button
+  observe({
+      if (input$btnSend > 0) {
+        isolate({
+          stopApp(returnValue = 0)
+        })
+      }
+    })
 }
 
 shinyApp(ui=ui, server=server)
@@ -226,6 +235,7 @@ ui = fluidPage(
   sidebarPanel(
    helpText("Get an overview of resources available from scanpy"),
    radioButtons("toplev", "components", choices=names(nmcl)),
+   actionButton("btnSend", "Stop app"),
    width=2),
   mainPanel(
    tabsetPanel(
@@ -251,6 +261,14 @@ server = function(input, output) {
     m2 = pylist2[[ input$toplev ]][[input$sec]]
     pyHelp2( m2 )
     }, sep="<br>")
+    # deal with stop button
+  observe({
+      if (input$btnSend > 0) {
+        isolate({
+          stopApp(returnValue = 0)
+        })
+      }
+    })
 }
 
 shinyApp(ui=ui, server=server)
