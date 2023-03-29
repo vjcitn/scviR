@@ -4,12 +4,12 @@
 #' @return character vector of lines from python help result
 #' @export
 pyHelp2 <- function(object) {
-  help <- reticulate::py_capture_output(reticulate::import_builtins()$help(object),
-    type = "stdout"
-  )
+  help <- reticulate::py_capture_output(reticulate::import_builtins()$help(object))
   tmp <- tempfile("py_help", fileext = ".txt")
   writeLines(help, con = tmp)
   ans <- readLines(tmp)
+  ans = gsub("<", "&lt;", ans)
+  ans = gsub(">", "&gt;", ans)
   unlink(tmp)
   ans
 }
