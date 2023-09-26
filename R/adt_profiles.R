@@ -2,6 +2,7 @@
 #' @importFrom pheatmap pheatmap
 #' @importFrom SummarizedExperiment assay
 #' @importFrom S4Vectors metadata
+#' @importFrom MatrixGenerics rowSds
 #' @param x SingleCellExperiment instance that has an `se.averaged` component
 #' in its metadata
 #' @param lb numeric(1) lower bound on 'breaks' sequence for ComplexHeatmap::pheatmap, defaults

@@ -1,5 +1,6 @@
 #' grab scvi-tools-processed PBMC CITE-seq data in anndata format (gzipped) from Open Storage Network
 #' @import BiocFileCache
+#' @importFrom utils download.file
 #' @note Original h5ad files obtained using scvi-tools 0.18.0 scvi.data.pbmcs_10x_cite_seq,
 #' then processed according to steps in the scviR vignette, which follow the
 #' [scvi-tools tutorial](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb) by Gayoso et al.
