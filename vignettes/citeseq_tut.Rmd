@@ -14,7 +14,24 @@ output:
     toc: yes
 ---
 
+
 # A CITE-seq example
+
+The purpose of this vignette is to illustrate the feasibility of reflecting
+the material in the [online tutorial](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.20.0/totalVI.ipynb) for scvi-tools 0.20.0 in Bioconductor.
+The authors of the tutorial describe it as producing
+
+> a joint latent representation of cells, denoised data for both protein and RNA
+
+Additional tasks include
+
+> integrat[ing] datasets, and comput[ing] differential expression of RNA and protein
+
+The integration concerns the simultaneous analysis of two datasets
+from 10x genomcs.
+
+In this vignette we carry out the bulk of the tutorial activities using
+R and Bioconductor, reaching to scvi-tools python code via basilisk.
 
 ## Retrieval of PBMC data
 The following chunk will
@@ -26,7 +43,7 @@ CITE-seq experiments from the scvi-tools data repository.
 library(scviR)
 library(ggplot2)
 library(reshape2)
-adref = get_citeseq_5k10k_pbmcs()
+adref = getCiteseq5k10kPbmcs()
 adref
 ```
 
@@ -37,11 +54,19 @@ with these data.  A fitted version is retrieved and cached
 using
 
 ```{r dogetv}
-vae = get_citeseq_tutvae()
+vae = getCiteseqTutvae()
+```
+This is an instance of an S3 class, `python.builtin.object`, 
+defined in the reticulate package.
+```{r lkclv}
 class(vae)
 ```
 
-Some fields available from the instance:
+Some fields of interest that are directly
+available from the instance include an
+indicator of the trained state, the general parameters
+used to train, and the "anndata" (annotated data) object
+that includes the input counts and various results of preprocessing:
 ```{r some}
 vae$is_trained
 cat(vae$`_model_summary_string`)
@@ -55,6 +80,19 @@ vae$module
 This is quite voluminous and is provided in an appendix.
 
 ## Trace of (negative) ELBO values
+
+The negative "evidence lower bound" (ELBO) is a criterion that is minimized
+in order to produce a fitted autoencoder.  The scvi-tools
+totalVAE elgorithm creates a nonlinear projection of the inputs
+to a 20-dimensional latent space, and a decoder that transforms
+object positions in the latent space to positions in the
+space of observations that are close to the original input positions.
+
+The negative ELBO values are computed for samples from
+the training data and
+for "left out" validation samples.  Details on the validation
+assessment would seem to be part of pytorch lightning.  More
+investigation of scvi-tools code and doc are in order.
 
 ```{r lkelb}
 h = vae$history
@@ -77,7 +115,7 @@ NE = vae$get_normalized_expression(n_samples=25L,
 ```
 We provide the totalVI-based denoised quantities in
 ```{r getdenoise}
-denoised = get_totalVI_normalized_5k10k()
+denoised = getTotalVINormalized5k10k()
 vapply(denoised, dim, integer(2))
 ```
 Note that these have features as columns, samples (cells)
@@ -93,10 +131,10 @@ We have stored a fully loaded anndata instance for retrieval
 to inspect the latent space and clustering produced
 by the tutorial notebook procedure.  The images produced here
 do not agree exactly with what I see in the colab pages for
-0.18.0 and 0.19.0.  The process was run in Jetstream2, not in colab.
+0.20.0.  The process was run in Jetstream2, not in colab.
 
 ```{r getproj, fig.height=6}
-full = get_totalVI_5k10k_adata()
+full = getTotalVI5k10kAdata()
 # class distribution
 cllabs = full$obs$leiden_totalVI
 blabs = full$obs$batch
@@ -115,7 +153,11 @@ ggplot(dd, aes(x=umap1, y=umap2, colour=factor(batch))) + geom_point(size=.05)
 
 ## Protein abundances in projected clusters
 
-We focus on four of the ADT.
+We focus on four of the ADT.  Points (cells) in the UMAP projection
+given above are colored by the estimated abundance of
+the proteins quantified via (normalized) ADT abundance.  Complementary
+expression of CD4 and CD8a is suggested by the configurations in
+the middle two panels.
 
 ```{r lknn,fig.width=8}
 pro4 = denoised$prot_nmlzd[,1:4]
@@ -127,9 +169,22 @@ ggplot(mm, aes(x=umap1, y=umap2, colour=log1p(value))) +
    geom_point(size=.1) + facet_grid(.~variable)
 ```
 
+# Conclusions
+
+We have shown that all the results of the totalVI application
+in the tutorial are readily accessible with utilities in scviR.
+Additional work on details of differential expression are present
+in the tutorial and can be explored by the interested reader/user.
+
 # Appendix: The VAE module
 
 The structure of the VAE is reported using
 ```{r lkmod2, eval=TRUE}
 vae$module
+```
+
+# Session information
+
+```{r lksess}
+sessionInfo()
 ```

@@ -21,7 +21,15 @@ an element of the [scverse](https://scverse.org/) toolchest for
 single-cell omics data analysis.
 
 The scviR package is a very elementary approach to interfacing
-between R, Bioconductor and scvi-tools.  
+between R, Bioconductor and scvi-tools.  The long-term plan is to
+illustrate several aspects of variational inference (VI) applied to single
+cell genomics in a way
+that is convenient for Bioconductor users.
+
+The package makes use of SingleCellExperiment and anndata
+representations of single-cell genomic assays.
+
+Several points should be kept in mind when using this package:
 
 - scvi-tools components develop rapidly; we are
 using [basilisk](https://bioconductor.org/packages/basilisk)
@@ -33,18 +41,34 @@ the [NVIDIA container registry](nvcr.io/nvidia/pytorch:22.12-py3) includes
 R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.20.0
 and scviR 0.0.2.  A Dockerfile is in scviR/inst/Docker;
 `vjcitn/nvidpt_bioc:0.0.2` can be pulled from dockerhub, it reports
-size 26.5GB.  
+size 26.5GB.  Container resources will be updated as needed.  Users
+should file issues at the package GitHub [repo](https://github.com/vjcitn/scviR)
+if the container is stale.
 - Code presented in the cite-seq tutorial
 vignette follows [the colab notebook
 for scvi-tools 0.18.0](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb).  *We will check for modifications in the scvi-tools 0.20.0 notebook*.
 - Additional work on this package will facilitate comparisons between
-outcomes of Bioconductor, scVI, and other analytic toolkits in the
+outcomes of Bioconductor, scVI, and other VI-oriented analytic toolkits in the
 single-cell domain.
 
-# Installation
+# Installation and use
 
 As of Feb 2023, use BiocManager to install scviR in R 4.2.2 or above:
 ```
 BiocManager::install("vjcitn/scviR")
 ```
-Be sure the `remotes` package has been installed.
+Be sure the `remotes` package has been installed.  If you are working at a slow
+internet connection, it may be useful to set `options(timeout=3600)` when running 
+functions 
+
+- `getCh12AllSce()` (74 MB will be retrieved and cached)
+- `getCh12Sce()` (58 MB will be retrieved and cached)
+- `getCiteseqTutvae()` (1.2 GB will be retrieved and cached)
+- `getTotalVINormalized5k10k()` (191 MB will be retrieved and cached)
+
+
+# Session information
+
+```{r lksess}
+sessionInfo()
+```

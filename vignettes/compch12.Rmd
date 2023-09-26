@@ -27,6 +27,11 @@ Chapter 12 of the OSCA book analyzes only the 10k dataset.
 
 # Technical steps to facilitate comparison
 
+The following subsections are essentially "code-only".  We
+exhibit steps necessary to assemble a SingleCellExperiment
+instance with the subset of the totalVI quantifications
+produced for the cells from the "10k" dataset.
+
 ## Acquire software
 ```{r getsoft, message=FALSE}
 library(SingleCellExperiment)
@@ -37,12 +42,12 @@ library(scviR)
 ## Obtain key data representations
 
 ```{r getdat, message=FALSE}
-ch12sce = get_ch12sce(clear_cache=TRUE)
+ch12sce = getCh12Sce(clear_cache=FALSE)
 ch12sce
 ```
 
 ```{r getdat2, message=FALSE}
-fullvi = get_totalVI_5k10k_adata()
+fullvi = getTotalVI5k10kAdata()
 fullvi
 ```
 
@@ -155,17 +160,17 @@ This heatmap uses precomputed cluster averages that are
 lodged in the metadata element of the SingleCellExperiment.
 Colors represent the log2-fold change from the grand average across all clusters.
 ```{r lkadt}
-adt_profiles(ch12sce_matched)
+adtProfiles(ch12sce_matched)
 ```
 
 ## Marker expression patterns in mRNA-based sub-clusters of ADT-based clusters
 
 We enhance the annotation of the list of subclusters retrieved
-using `get_ch12_allsce` and then drill into mRNA-based
+using `getCh12AllSce` and then drill into mRNA-based
 subclusters of ADT-based cluster 3 to compare expression levels
 of three genes.
 ```{r dosubcl}
-ch12_allsce = get_ch12_allsce() 
+ch12_allsce = getCh12AllSce() 
 ch12_allsce = lapply(ch12_allsce, function(x) {
    colnames(x)= x$Barcode; 
    cn = colnames(x); 
@@ -283,5 +288,11 @@ ADT and mRNA abundance patterns, such as intersection and
 concatenation methods in the feature selection materials
 in OSCA ch. 12
 
-- effects of tuning and architecture details for the totalVI
-VAE
+- effects of tuning and architecture details for the totalVI VAE
+
+# Session information
+
+```{r lksess}
+sessionInfo()
+```
+

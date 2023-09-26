@@ -17,7 +17,7 @@ domain is the anndata instance for the 5k-10k PBMC dataset with representations 
 assignments, and UMAP projection:
 
 ```
-> tot = get_totalVI_5k10k_adata() # retrieved on first call from Open Storage Network, cached
+> tot = getTotalVI5k10kAdata() # retrieved on first call from Open Storage Network, cached
 > tot
 AnnData object with n_obs × n_vars = 10849 × 4000
     obs: 'n_genes', 'percent_mito', 'n_counts', 'batch', '_scvi_labels', '_scvi_batch', 'leiden_totalVI'

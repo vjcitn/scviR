@@ -13,7 +13,7 @@ basiliskRun result with import from reticulate, typically a Module
 basic interface
 }
 \examples{
-scvi = scviR()
+scvi <- scviR()
 scvi
 scvi$model
 }

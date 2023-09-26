@@ -2,6 +2,7 @@
 #' @importFrom pheatmap pheatmap
 #' @importFrom SummarizedExperiment assay
 #' @importFrom S4Vectors metadata
+#' @importFrom MatrixGenerics rowSds
 #' @param x SingleCellExperiment instance that has an `se.averaged` component
 #' in its metadata
 #' @param lb numeric(1) lower bound on 'breaks' sequence for ComplexHeatmap::pheatmap, defaults
@@ -11,20 +12,20 @@
 #' @param do_z logical(1) if TRUE, divide the residuals by their standard deviation across clusters,
 #' defaults to false
 #' @return ComplexHeatmap::pheatmap instance
-#' @note See the OSCA book ch12.5.2 for the application.  
+#' @note See the OSCA book ch12.5.2 for the application.
 #' @return side effect of pheatmap::pheatmap call
 #' @examples
-#' ch12sce = get_ch12sce()
-#' adt_profiles(ch12sce)
-#' adt_profiles(ch12sce, do_z = TRUE)
+#' ch12sce <- getCh12Sce()
+#' adtProfiles(ch12sce)
+#' adtProfiles(ch12sce, do_z = TRUE)
 #' @export
-adt_profiles = function(x, lb=-3, ub=3, do_z=FALSE) {
- stopifnot("se.averaged" %in% names(metadata(x)))
- avg = assay(metadata(x)$se.averaged)
- sds = rowSds(avg)
- quant = avg - rowMeans(avg)
- if (do_z) quant = t(t(quant)/sds)
- pheatmap::pheatmap(quant,
-  breaks=seq(lb,ub, length.out=101))
+adtProfiles <- function(x, lb = -3, ub = 3, do_z = FALSE) {
+  stopifnot("se.averaged" %in% names(metadata(x)))
+  avg <- assay(metadata(x)$se.averaged)
+  sds <- rowSds(avg)
+  quant <- avg - rowMeans(avg)
+  if (do_z) quant <- t(t(quant) / sds)
+  pheatmap::pheatmap(quant,
+    breaks = seq(lb, ub, length.out = 101)
+  )
 }
-
