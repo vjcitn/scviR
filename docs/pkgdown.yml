@@ -1,12 +1,9 @@
-pandoc: '2.5'
+pandoc: 2.9.2.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   citeseq_tut: citeseq_tut.html
   compch12: compch12.html
   scviR: scviR.html
-last_built: 2023-03-26T03:41Z
-urls:
-  reference: https://github.com/vjcitn/scviR/reference
-  article: https://github.com/vjcitn/scviR/articles
+last_built: 2023-09-26T13:16Z
 

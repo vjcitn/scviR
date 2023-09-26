@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scviR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/vjcitn/scviR/">
+  <a href="https://github.com/vjcitn/scviR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -78,15 +78,15 @@
 
       
 
-      </header><div class="row">
+      </header><script src="scviR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>scviR: an R package interfacing Bioconductor and scvi-tools</h1>
                         <h4 data-toc-skip class="author">Vince Carey stvjc at channing.harvard.edu</h4>
             
-            <h4 data-toc-skip class="date">March 25, 2023</h4>
+            <h4 data-toc-skip class="date">September 26, 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/vjcitn/scviR/blob/HEAD/vignettes/scviR.Rmd"><code>vignettes/scviR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/vjcitn/scviR/blob/HEAD/vignettes/scviR.Rmd" class="external-link"><code>vignettes/scviR.Rmd</code></a></small>
       <div class="hidden name"><code>scviR.Rmd</code></div>
 
     </div>
@@ -102,7 +102,7 @@
 <p>Several points should be kept in mind when using this package:</p>
 <ul>
 <li>scvi-tools components develop rapidly; we are using <a href="https://bioconductor.org/packages/basilisk" class="external-link">basilisk</a> to manage R/python interoperation, and as of current writing we work with version 0.20.0 of scvi-tools. Specific versions of python components are enumerated in the file R/basilisk.R.</li>
-<li>A docker container based on a PyTorch-oriented image in the <a href="nvcr.io/nvidia/pytorch:22.12-py3">NVIDIA container registry</a> includes R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.20.0 and scviR 0.0.2. A Dockerfile is in scviR/inst/Docker; <code>vjcitn/nvidpt_bioc:0.0.2</code> can be pulled from dockerhub, it reports size 26.5GB. Container resources will be updated as needed. Users should file issues at the package GitHub <a href="https://github.com/vjcitn/scviR">repo</a> if the container is stale.</li>
+<li>A docker container based on a PyTorch-oriented image in the <a href="nvcr.io/nvidia/pytorch:22.12-py3">NVIDIA container registry</a> includes R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.20.0 and scviR 0.0.2. A Dockerfile is in scviR/inst/Docker; <code>vjcitn/nvidpt_bioc:0.0.2</code> can be pulled from dockerhub, it reports size 26.5GB. Container resources will be updated as needed. Users should file issues at the package GitHub <a href="https://github.com/vjcitn/scviR" class="external-link">repo</a> if the container is stale.</li>
 <li>Code presented in the cite-seq tutorial vignette follows <a href="https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb" class="external-link">the colab notebook for scvi-tools 0.18.0</a>. <em>We will check for modifications in the scvi-tools 0.20.0 notebook</em>.</li>
 <li>Additional work on this package will facilitate comparisons between outcomes of Bioconductor, scVI, and other VI-oriented analytic toolkits in the single-cell domain.</li>
 </ul>
@@ -111,7 +111,7 @@
 <h2 id="installation-and-use">Installation and use<a class="anchor" aria-label="anchor" href="#installation-and-use"></a>
 </h2>
 <p>As of Feb 2023, use BiocManager to install scviR in R 4.2.2 or above:</p>
-<pre><code><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"vjcitn/scviR"</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"vjcitn/scviR"</span><span class="op">)</span></span></code></pre>
 <p>Be sure the <code>remotes</code> package has been installed. If you are working at a slow internet connection, it may be useful to set <code>options(timeout=3600)</code> when running functions</p>
 <ul>
 <li>
@@ -129,13 +129,13 @@
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R Under development (unstable) (2023-03-18 r84003)</span></span>
+<pre><code><span><span class="co">## R version 4.3.1 Patched (2023-08-27 r85021)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">## Running under: Ubuntu 20.04.5 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
-<span><span class="co">## BLAS:   /home/stvjc/R-43dev-dist/lib/R/lib/libRblas.so </span></span>
-<span><span class="co">## LAPACK: /home/stvjc/R-43dev-dist/lib/R/lib/libRlapack.so;  LAPACK version 3.11.0</span></span>
+<span><span class="co">## BLAS:   /home/vincent/R-4-3-dist/lib/R/lib/libRblas.so </span></span>
+<span><span class="co">## LAPACK: /home/vincent/R-4-3-dist/lib/R/lib/libRlapack.so;  LAPACK version 3.11.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -152,22 +152,22 @@
 <span><span class="co">## [1] base</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] BiocStyle_2.27.1</span></span>
+<span><span class="co">## [1] BiocStyle_2.29.1</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] vctrs_0.6.0         cli_3.6.0           knitr_1.42         </span></span>
-<span><span class="co">##  [4] rlang_1.1.0         xfun_0.37           stringi_1.7.12     </span></span>
-<span><span class="co">##  [7] purrr_1.0.1         textshaping_0.3.6   jsonlite_1.8.4     </span></span>
-<span><span class="co">## [10] glue_1.6.2          rprojroot_2.0.3     htmltools_0.5.4    </span></span>
-<span><span class="co">## [13] ragg_1.2.5          sass_0.4.5          methods_4.3.0      </span></span>
-<span><span class="co">## [16] rmarkdown_2.20      evaluate_0.20       jquerylib_0.1.4    </span></span>
+<span><span class="co">##  [1] vctrs_0.6.3         cli_3.6.1           knitr_1.44         </span></span>
+<span><span class="co">##  [4] rlang_1.1.1         xfun_0.40           stringi_1.7.12     </span></span>
+<span><span class="co">##  [7] purrr_1.0.2         textshaping_0.3.6   jsonlite_1.8.7     </span></span>
+<span><span class="co">## [10] glue_1.6.2          rprojroot_2.0.3     htmltools_0.5.6    </span></span>
+<span><span class="co">## [13] ragg_1.2.5          sass_0.4.7          methods_4.3.1      </span></span>
+<span><span class="co">## [16] rmarkdown_2.24      evaluate_0.21       jquerylib_0.1.4    </span></span>
 <span><span class="co">## [19] fastmap_1.1.1       yaml_2.3.7          lifecycle_1.0.3    </span></span>
-<span><span class="co">## [22] utils_4.3.0         memoise_2.0.1       bookdown_0.33      </span></span>
-<span><span class="co">## [25] BiocManager_1.30.20 stringr_1.5.0       compiler_4.3.0     </span></span>
-<span><span class="co">## [28] fs_1.6.1            stats_4.3.0         graphics_4.3.0     </span></span>
-<span><span class="co">## [31] systemfonts_1.0.4   digest_0.6.31       R6_2.5.1           </span></span>
-<span><span class="co">## [34] magrittr_2.0.3      bslib_0.4.2         tools_4.3.0        </span></span>
-<span><span class="co">## [37] grDevices_4.3.0     pkgdown_2.0.7       cachem_1.0.7       </span></span>
+<span><span class="co">## [22] utils_4.3.1         memoise_2.0.1       bookdown_0.35      </span></span>
+<span><span class="co">## [25] BiocManager_1.30.22 stringr_1.5.0       compiler_4.3.1     </span></span>
+<span><span class="co">## [28] fs_1.6.3            stats_4.3.1         graphics_4.3.1     </span></span>
+<span><span class="co">## [31] systemfonts_1.0.4   digest_0.6.33       R6_2.5.1           </span></span>
+<span><span class="co">## [34] magrittr_2.0.3      bslib_0.5.1         tools_4.3.1        </span></span>
+<span><span class="co">## [37] grDevices_4.3.1     pkgdown_2.0.7       cachem_1.0.8       </span></span>
 <span><span class="co">## [40] desc_1.4.2</span></span></code></pre>
 </div>
   </div>

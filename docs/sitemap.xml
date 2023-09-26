@@ -1,135 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/vjcitn/scviR/404.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/articles/citeseq_tut.html</loc>
+    <loc>/articles/citeseq_tut.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/articles/compch12.html</loc>
+    <loc>/articles/compch12.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/articles/index.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/articles/scviR.html</loc>
+    <loc>/articles/scviR.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/authors.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/index.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/adtProfiles.html</loc>
+    <loc>/reference/adtProfiles.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/adt_profiles.html</loc>
+    <loc>/reference/adt_profiles.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/anndataR.html</loc>
+    <loc>/reference/anndataR.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/bsklenv.html</loc>
+    <loc>/reference/bsklenv.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/cacheCiteseq5k10kPbmcs.html</loc>
+    <loc>/reference/cacheCiteseq5k10kPbmcs.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/cacheCiteseq5k10kTutvae.html</loc>
+    <loc>/reference/cacheCiteseq5k10kTutvae.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/cache_citeseq_5k10k_pbmcs.html</loc>
+    <loc>/reference/cache_citeseq_5k10k_pbmcs.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/cache_citeseq_5k10k_tutvae.html</loc>
+    <loc>/reference/cache_citeseq_5k10k_tutvae.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/clusters.adt.html</loc>
+    <loc>/reference/clusters.adt.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/clusters.rna.html</loc>
+    <loc>/reference/clusters.rna.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/exploreSubcl.html</loc>
+    <loc>/reference/exploreSubcl.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/explore_subcl.html</loc>
+    <loc>/reference/explore_subcl.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getCh12AllSce.html</loc>
+    <loc>/reference/getCh12AllSce.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getCh12Sce.html</loc>
+    <loc>/reference/getCh12Sce.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getCiteseq5k10kPbmcs.html</loc>
+    <loc>/reference/getCiteseq5k10kPbmcs.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getCiteseqTutvae.html</loc>
+    <loc>/reference/getCiteseqTutvae.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getPro5k10kAdata.html</loc>
+    <loc>/reference/getPro5k10kAdata.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getSubclLM.html</loc>
+    <loc>/reference/getSubclLM.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getSubclusteringFeatures.html</loc>
+    <loc>/reference/getSubclusteringFeatures.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getTotalVI5k10kAdata.html</loc>
+    <loc>/reference/getTotalVI5k10kAdata.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/getTotalVINormalized5k10k.html</loc>
+    <loc>/reference/getTotalVINormalized5k10k.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_ch12_allsce.html</loc>
+    <loc>/reference/get_ch12_allsce.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_ch12sce.html</loc>
+    <loc>/reference/get_ch12sce.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_citeseq_5k10k_pbmcs.html</loc>
+    <loc>/reference/get_citeseq_5k10k_pbmcs.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_citeseq_tutvae.html</loc>
+    <loc>/reference/get_citeseq_tutvae.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_pro_5k10k_adata.html</loc>
+    <loc>/reference/get_pro_5k10k_adata.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_subcl_LM.html</loc>
+    <loc>/reference/get_subcl_LM.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_subclustering_features.html</loc>
+    <loc>/reference/get_subclustering_features.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_totalVI_5k10k_adata.html</loc>
+    <loc>/reference/get_totalVI_5k10k_adata.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/get_totalVI_normalized_5k10k.html</loc>
+    <loc>/reference/get_totalVI_normalized_5k10k.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/index.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/pyHelp2.html</loc>
+    <loc>/reference/pyHelp2.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/scanpyHelper.html</loc>
+    <loc>/reference/scanpyHelper.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/scanpyR.html</loc>
+    <loc>/reference/scanpyR.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/scverseHelper.html</loc>
+    <loc>/reference/scverseHelper.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/scviHelper.html</loc>
+    <loc>/reference/scviHelper.html</loc>
   </url>
   <url>
-    <loc>https://github.com/vjcitn/scviR/reference/scviR.html</loc>
+    <loc>/reference/scviR.html</loc>
   </url>
 </urlset>
