@@ -1,7 +1,7 @@
 Package: scviR
 Date: 2023-03-07
 Title: experimental inferface from R to scvi-tools
-Version: 1.0.0
+Version: 1.1.1
 Authors@R: 
     c(person(
         "Vincent", "Carey", role = c("aut", "cre"),
@@ -20,7 +20,8 @@ License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 4.3), basilisk, shiny, SingleCellExperiment, utils
 Imports: reticulate, BiocFileCache, utils, pheatmap,
-	SummarizedExperiment, S4Vectors, limma, scater
+	SummarizedExperiment, S4Vectors, limma, scater,
+	stats, MatrixGenerics
 Suggests: knitr, testthat, reshape2, ggplot2, rhdf5, BiocStyle
 VignetteBuilder: knitr
 biocViews: Infrastructure, SingleCell, DataImport

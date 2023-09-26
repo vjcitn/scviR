@@ -1,5 +1,6 @@
 #' get lmFit for heterogeneity across subclusters
 #' @importFrom limma lmFit eBayes topTable
+#' @importFrom stats model.matrix
 #' @import SingleCellExperiment
 #' @import SummarizedExperiment
 #' @param inlist list of SingleCellExperiments (SCEs) formed by scran::quickSubCluster
@@ -36,7 +37,7 @@ getSubclusteringFeatures <- function(inlist, clname, n = 20) {
   suppressWarnings({
     lm1 <- eBayes(lm1) # lots of zeroes
   })
-  tt <- topTable(lm1, p, n = n)
+  tt <- topTable(lm1, p, number = n)
   en <- rownames(tt)
   rd <- rowData(inlist[[1]][en, ])
   tt$gene <- en
