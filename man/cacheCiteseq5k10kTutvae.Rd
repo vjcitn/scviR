@@ -28,6 +28,6 @@ scvi <- scviR()
 adm <- anndataR()
 hpath <- cacheCiteseq5k10kPbmcs()
 adata <- adm$read(hpath)
-mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu = FALSE)
+mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
 mod
 }
