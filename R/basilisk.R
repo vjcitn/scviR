@@ -4,7 +4,7 @@
 bsklenv <- basilisk::BasiliskEnvironment(
   envname = "bsklenv",
   pkgname = "scviR",
-  packages = c("numpy=1.24.4", "pandas=1.5.3"),
+  packages = c("python=3.10", "numpy=1.24.4", "pandas=1.5.3"),
   pip = c(
     "anndata==0.10.1",
     "docrep==0.3.2",
@@ -25,7 +25,7 @@ bsklenv <- basilisk::BasiliskEnvironment(
     "ml-collections==0.1.1",
     "mudata==0.2.3",
     "scvi-tools==1.1.2", "scanpy==1.9.5",
-    "matplotlib==3.7.3"
+    "matplotlib==3.7.3", "scikit-misc==0.3.1"
   )
 )
 

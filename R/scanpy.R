@@ -29,3 +29,18 @@ anndataR <- function() {
     reticulate::import("anndata")
   })
 }
+
+#' basic interface to MuData
+#' @return basiliskRun result with import from reticulate, typically a Module
+#' @examples
+#' md <- MuDataR()
+#' md
+#' head(names(md))
+#' @export
+MuDataR <- function() {
+  proc <- basilisk::basiliskStart(bsklenv)
+  on.exit(basilisk::basiliskStop(proc))
+  basilisk::basiliskRun(proc, function() {
+    reticulate::import("mudata")
+  })
+}
