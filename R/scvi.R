@@ -7,7 +7,7 @@
 #' scvi$model
 #' @export
 scviR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv)
+  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function() {
     reticulate::import("scvi")

@@ -7,7 +7,7 @@
 #' sc$pp
 #' @export
 scanpyR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv)
+  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function() {
     reticulate::import("scanpy")
@@ -23,7 +23,7 @@ scanpyR <- function() {
 #' ad$read
 #' @export
 anndataR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv)
+  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function() {
     reticulate::import("anndata")
@@ -38,9 +38,24 @@ anndataR <- function() {
 #' head(names(md))
 #' @export
 MuDataR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv)
+  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
   on.exit(basilisk::basiliskStop(proc))
   basilisk::basiliskRun(proc, function() {
     reticulate::import("mudata")
+  })
+}
+
+#' basic interface to muon
+#' @return basiliskRun result with import from reticulate, typically a Module
+#' @examples
+#' md <- muonR()
+#' md
+#' head(names(md))
+#' @export
+muonR <- function() {
+  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
+  on.exit(basilisk::basiliskStop(proc))
+  basilisk::basiliskRun(proc, function() {
+    reticulate::import("muon")
   })
 }
