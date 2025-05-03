@@ -1,6 +1,7 @@
 
 
 thevers = c(
+"rope==1.13.0",
 "scvi-tools==1.3.0",
 "session_info==v1.0.1",
 "anndata==0.11.4",
@@ -42,13 +43,16 @@ thevers = c(
 "six==1.17.0",
 #"sklearn==1.6.1",
 "sparse==0.16.0",
-"sympy==1.14.0",
+"sympy==1.13.1",
 "threadpoolctl==3.6.0",
 "toolz==1.0.0",
-"torch==2.7.0",
+"torch==2.6.0",
 "torchmetrics==1.7.1",
 "tqdm==4.67.1",
-"xarray==2025.4.0"
+"xarray==2025.4.0",
+"scikit-misc==0.5.1",
+"leidenalg==0.10.2",
+"igraph==0.11.8"
 #"yaml==6.0.2"
 )
 
