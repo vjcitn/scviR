@@ -125,6 +125,7 @@ n_epochs = 50L
 acc = "cpu"
 tchk = try(reticulate::import("torch"))
 if (!inherits(tchk, "try-error") && tchk$backends$mps$is_available()) acc = "mps"
+if (!inherits(tchk, "try-error") && tchk$backends$cuda$is_built()) acc = "gpu"
 model$train(max_epochs=n_epochs, accelerator = acc)
 ```
 
