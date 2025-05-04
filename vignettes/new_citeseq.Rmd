@@ -1,0 +1,144 @@
+---
+title: "CITE-seq setup for scviR, 2025"
+author: "Vince Carey stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{CITE-seq setup for scviR, 2025}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Overview
+
+This vignette concerns a 2025 update of scviR.
+
+The objective is to allow exploration of CITE-seq data
+with TOTALVI as illustrated in notebooks provided
+in the scvi-tools project.  Ultimately it would
+be desirable to compare the analyses of the OSCA book
+to those produced with TOTALVI, but at this time
+we are focused on tool interoperability.
+
+As of May 2025, use BiocManager to install scviR in R 4.5 or above:
+```
+BiocManager::install("scviR")
+```
+
+Note that this package uses basilisk primarily to pin
+versions of associated software.  We expose python objects
+in the global environment.  When the required API comes
+into focus, more isolation of python operations and objects
+will be established.
+
+# Acquire CITE-seq data from 10x human discovery platform (15k cells, 349 proteins)
+
+```{r doe44}
+library(scviR)
+mdata1 = muonR()$read_10x_h5("E44_1_restPBMC_DCpos_filtered_feature_bc_matrix.h5")
+mdata1$mod["rna"]$var_names_make_unique()
+reticulate::py_run_string('r.mdata1.mod["rna"].layers["counts"] = r.mdata1.mod["rna"].X.copy()')
+mdata1
+```
+
+# Use the scvi-tools approach to preprocessing
+
+Filter genes using scanpy.
+
+```{r doscanpy}
+scr = scanpyR()
+scr$pp$normalize_total(mdata1$mod["rna"])
+scr$pp$log1p(mdata1$mod["rna"])
+#
+scr$pp$highly_variable_genes(
+    mdata1$mod["rna"],
+    n_top_genes=4000L,
+    flavor="seurat_v3",
+    layer="counts",
+)
+```
+
+Add the filtered data to the MuData instance.
+
+```{r domu}
+py_run_string('r.mdata1.mod["rna_subset"] = r.mdata1.mod["rna"][:, r.mdata1.mod["rna"].var["highly_variable"]].copy()')
+mdata1 = MuDataR()$MuData(mdata1$mod)
+```
+
+Produce dense versions of quantification matrices, and "update".
+
+
+```{r densify}
+py_run_string('r.mdata1["prot"].X = r.mdata1["prot"].X.toarray()')
+py_run_string('r.mdata1["rna_subset"].X = r.mdata1["rna_subset"].X.toarray()')
+py_run_string('r.mdata1.mod["rna_subset"].layers["counts"] = r.mdata1.mod["rna_subset"].layers["counts"].toarray()')
+mdata1$update()
+```
+
+# Prepare for TOTALVI
+
+Text of notebook:
+```
+Now we run `setup_mudata`, which is the MuData analog to `setup_anndata`. 
+The caveat of this workflow is that we need to provide this function which 
+modality of the `mdata` object contains each piece of data. So for example, 
+the batch information is in `mdata.mod["rna"].obs["batch"]`. Therefore, in the `modalities` 
+argument below we specify that the `batch_key` can be 
+found in the `"rna_subset"` modality of the MuData object.
+
+Notably, we provide `protein_layer=None`. This means scvi-tools will pull 
+information from `.X` from the modality specified in `modalities` (`"protein"` 
+in this case). In the case of RNA, we want to use the counts, 
+which we stored in `mdata.mod["rna"].layers["counts"]`.
+```
+
+```{r dosetup}
+scviR()$model$TOTALVI$setup_mudata(
+    mdata1,
+    rna_layer="counts",
+    protein_layer=reticulate::py_none(),
+    modalities=list(
+        "rna_layer"= "rna_subset",
+        "protein_layer"= "prot",
+        "batch_key"= "rna_subset"
+    ), 
+)
+```
+
+# Train TOTALVI
+
+Here's the model:
+```{r what}
+model = scviR()$model$TOTALVI(mdata1)
+model
+```
+Use `model$module` to see the complete architecture.
+
+Perform truncated training:
+```{r dotrain, message=FALSE, results="hide"}
+n_epochs = 50L
+acc = "cpu"
+tchk = try(reticulate::import("torch"))
+if (!inherits(tchk, "try-error") && tchk$backends$mps$is_available()) acc = "mps"
+model$train(max_epochs=n_epochs, accelerator = acc)
+```
+
+Extract the ELBO criteria.
+```{r lkelb}
+val_elbo = unlist(model$history$elbo_validation) 
+tr_elbo = model$history$elbo_train$elbo_trai
+plot(1:n_epochs, tr_elbo, type="l", xlab="epoch", ylab="ELBO", ylim=c(0,7000))
+lines(1:n_epochs, val_elbo, col="blue")
+legend(3, 6000, col=c("black", "blue"), lty=1, legend=c("train", "validate"))
+```
+
+# Session info
+
+```{r sessinf}
+sessionInfo()
+```
