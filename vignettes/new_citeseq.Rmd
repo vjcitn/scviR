@@ -40,7 +40,8 @@ will be established.
 
 ```{r doe44}
 library(scviR)
-mdata1 = muonR()$read_10x_h5("E44_1_restPBMC_DCpos_filtered_feature_bc_matrix.h5")
+HDP.h5 = cacheCiteseqHDPdata()
+mdata1 = muonR()$read_10x_h5(HDP.h5)
 mdata1$mod["rna"]$var_names_make_unique()
 reticulate::py_run_string('r.mdata1.mod["rna"].layers["counts"] = r.mdata1.mod["rna"].X.copy()')
 mdata1
