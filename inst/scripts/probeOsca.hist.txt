@@ -1,0 +1,44 @@
+source("trainOnE44.R", echo=TRUE)
+source("rest", echo=TRUE)
+ls()
+model
+model$module
+mdata1
+mdata1['rna']
+mdata1['rna_subset']
+mdata1['prot']
+library(zellkonverter)
+ls(2)
+new_prot = AnnData2SCE(mdata1['prot'])
+new_prot
+table(new_prot$X_scvi_batch)
+cc = colSums(assay(new_prot))
+hist(cc)
+cc = colSums(log10(assay(new_prot)+1))
+hist(cc)
+library(scran)
+library(scater)
+library(DropletUtils)
+?cleanTagCounts
+xx = cleanTagCounts(assay(new_prot))
+class(xx)
+xx[1,]
+table(xx$discard)
+table(xx$zero.ambient)
+qc.stats = xx
+hist(log10(qc.stats$sum.controls + 1), col='grey', breaks=50,
+    main="", xlab="Log-total count for controls per cell")
+names(qc.stats)
+rownames(new_prot)
+grep("Ctl", rownames(new_prot))
+xx = cleanTagCounts(assay(new_prot), controls=grep("Ctl", rownames(new_prot))
+)
+qc.stats = xx
+summary(qc.stats$high.controls)
+table(qc.stats$zero.ambient)
+hist(log10(qc.stats$sum.controls + 1), col='grey', breaks=50,
+    main="", xlab="Log-total count for controls per cell")
+thresholds <- attr(qc.stats$high.controls, "thresholds")
+abline(v=log10(thresholds["higher"]+1), col="red", lty=2)
+getwd()
+savehistory(file="probeOsca.hist.txt")

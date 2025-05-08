@@ -48,7 +48,7 @@ cacheCiteseq5k10kPbmcs <- function() {
 #' adm <- anndataR()
 #' hpath <- cacheCiteseq5k10kPbmcs()
 #' adata <- adm$read(hpath)
-#' mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu = FALSE)
+#' mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
 #' mod
 #' @export
 cacheCiteseq5k10kTutvae <- function() {
@@ -79,6 +79,7 @@ cacheCiteseq5k10kTutvae <- function() {
 #' helper to get the tutorial VAE for PBMCs from scvi-tools tutorial
 #' @param use_gpu logical(1), defaulting to FALSE, passed to TOTALVI.load
 #' @return python reference to anndata
+#' @note March 2024 use_gpu ignored
 #' @examples
 #' getCiteseqTutvae()
 #' @export
@@ -91,7 +92,7 @@ getCiteseqTutvae <- function(use_gpu = FALSE) {
   adm <- anndataR()
   hpath <- cacheCiteseq5k10kPbmcs()
   adata <- adm$read(hpath)
-  mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata, use_gpu = use_gpu)
+  mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = use_gpu)
   mod
 }
 

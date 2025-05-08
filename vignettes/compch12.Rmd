@@ -47,6 +47,7 @@ ch12sce
 ```
 
 ```{r getdat2, message=FALSE}
+options(timeout=3600)
 fullvi = getTotalVI5k10kAdata()
 fullvi
 ```
