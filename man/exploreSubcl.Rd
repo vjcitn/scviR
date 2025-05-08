@@ -25,9 +25,11 @@ example, set `ask=FALSE`.
 }
 \examples{
 \donttest{
+if (interactive()) {
 sce <- getCh12Sce()
 all.sce <- getCh12AllSce()
 data(clusters.adt)
 runApp(exploreSubcl(sce, all.sce, clusters.adt)) # trips up interactive pkgdown?)
+}
 }
 }
