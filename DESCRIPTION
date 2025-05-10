@@ -1,7 +1,7 @@
 Package: scviR
 Date: 2025-05-02
 Title: experimental inferface from R to scvi-tools
-Version: 1.9.8
+Version: 1.9.9
 Authors@R: 
     c(person(
         "Vincent", "Carey", role = c("aut", "cre"),
