@@ -2,7 +2,7 @@
 % Please edit documentation in R/cache_citeseq_pbmcs.R
 \name{cacheCiteseq5k10kTutvae}
 \alias{cacheCiteseq5k10kTutvae}
-\title{grab scvi-tools VAE instance built on the PBMC datasets following the tutorial}
+\title{Deprecated: grab scvi-tools VAE instance built on the PBMC datasets following the tutorial}
 \usage{
 cacheCiteseq5k10kTutvae()
 }
@@ -10,9 +10,11 @@ cacheCiteseq5k10kTutvae()
 invisibly, the path to the .zip file holding the fitted VAE and associated data
 }
 \description{
-grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
+Deprecated: grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
 }
 \note{
+the serialized model is obsolete
+
 VAE construction followed tutorial at
 `https://docs.scvi-tools.org/en/stable/tutorials/notebooks/totalVI.html`.
 
