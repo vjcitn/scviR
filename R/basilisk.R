@@ -63,4 +63,4 @@ bsklenv <- basilisk::BasiliskEnvironment(
   envname = "bsklenv",
   pkgname = "scviR",
   packages = c("pandas==2.2.3", "python==3.10"),
-  pip = "scvi-tools==1.3.0" )
+  pip = thevers )

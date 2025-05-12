@@ -53,6 +53,7 @@ cacheCiteseq5k10kPbmcs <- function() {
 #' time for internet downloads, if working at a relatively slow network connection.
 #' @return invisibly, the path to the .zip file holding the fitted VAE and associated data
 #' @examples
+#' \dontrun{
 #' zpath <- cacheCiteseq5k10kTutvae()
 #' td <- tempdir()
 #' utils::unzip(zpath, exdir = td)
@@ -63,6 +64,7 @@ cacheCiteseq5k10kPbmcs <- function() {
 #' adata <- adm$read(hpath)
 #' mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
 #' mod
+#' }
 #' @export
 cacheCiteseq5k10kTutvae <- function() {
 .Deprecated(new="cacheCiteseqHDPmodel", package="scviR",
@@ -96,7 +98,9 @@ cacheCiteseq5k10kTutvae <- function() {
 #' @return python reference to anndata
 #' @note March 2024 use_gpu ignored
 #' @examples
+#' \dontrun{
 #' getCiteseqTutvae()
+#' }
 #' @export
 getCiteseqTutvae <- function(use_gpu = FALSE) {
   zpath <- cacheCiteseq5k10kTutvae()
