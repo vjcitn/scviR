@@ -17,6 +17,9 @@ output:
 
 # A CITE-seq example
 
+THIS VIGNETTE IS SUPERSEDED BY new_citeseq.Rmd.  All chunks
+in this vignette have eval=FALSE.
+
 The purpose of this vignette is to illustrate the feasibility of reflecting
 the material in the [online tutorial](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.20.0/totalVI.ipynb) for scvi-tools 0.20.0 in Bioconductor.
 The authors of the tutorial describe it as producing
@@ -39,7 +42,7 @@ acquire (and cache, using BiocFileCache) a preprocessed version of the 10k and 5
 CITE-seq experiments from the scvi-tools data repository.
 
 
-```{r doinit,message=FALSE}
+```{r doinit,message=FALSE, eval=FALSE}
 library(scviR)
 library(ggplot2)
 library(reshape2)
@@ -53,12 +56,12 @@ The totalVI variational autoencoder was fit
 with these data.  A fitted version is retrieved and cached
 using
 
-```{r dogetv}
+```{r dogetv, eval=FALSE}
 vae = getCiteseqTutvae()
 ```
 This is an instance of an S3 class, `python.builtin.object`, 
 defined in the reticulate package.
-```{r lkclv}
+```{r lkclv, eval=FALSE}
 class(vae)
 ```
 
@@ -67,7 +70,7 @@ available from the instance include an
 indicator of the trained state, the general parameters
 used to train, and the "anndata" (annotated data) object
 that includes the input counts and various results of preprocessing:
-```{r some}
+```{r some, eval=FALSE}
 vae$is_trained
 cat(vae$`_model_summary_string`)
 vae$adata
@@ -94,7 +97,7 @@ for "left out" validation samples.  Details on the validation
 assessment would seem to be part of pytorch lightning.  More
 investigation of scvi-tools code and doc are in order.
 
-```{r lkelb}
+```{r lkelb, eval=FALSE}
 h = vae$history
 npts = nrow(h$elbo_train)
 plot(seq_len(npts), as.numeric(h$elbo_train[[1]]), ylim=c(1200,1400), 
@@ -114,13 +117,13 @@ NE = vae$get_normalized_expression(n_samples=25L,
 )
 ```
 We provide the totalVI-based denoised quantities in
-```{r getdenoise}
+```{r getdenoise, eval=FALSE}
 denoised = getTotalVINormalized5k10k()
 vapply(denoised, dim, integer(2))
 ```
 Note that these have features as columns, samples (cells)
 as rows.
-```{r lkn}
+```{r lkn, eval=FALSE}
 utils::head(colnames(denoised$rna_nmlzd))
 utils::head(colnames(denoised$prot_nmlzd))
 ```
@@ -133,7 +136,7 @@ by the tutorial notebook procedure.  The images produced here
 do not agree exactly with what I see in the colab pages for
 0.20.0.  The process was run in Jetstream2, not in colab.
 
-```{r getproj, fig.height=6}
+```{r getproj, fig.height=6, eval=FALSE}
 full = getTotalVI5k10kAdata()
 # class distribution
 cllabs = full$obs$leiden_totalVI
@@ -147,7 +150,7 @@ ggplot(dd, aes(x=umap1, y=umap2, colour=clust)) + geom_point(size=.05) +
 
 Effectiveness at accommodating the two-batch design is suggested by the
 mixed representation of the batches in all the Leiden clusters.
-```{r getba}
+```{r getba, eval=FALSE}
 ggplot(dd, aes(x=umap1, y=umap2, colour=factor(batch))) + geom_point(size=.05)
 ```
 
@@ -159,7 +162,7 @@ the proteins quantified via (normalized) ADT abundance.  Complementary
 expression of CD4 and CD8a is suggested by the configurations in
 the middle two panels.
 
-```{r lknn,fig.width=8}
+```{r lknn,fig.width=8, eval=FALSE}
 pro4 = denoised$prot_nmlzd[,1:4]
 names(pro4) = gsub("_.*", "", names(pro4))
 wprot = cbind(dd, pro4)
@@ -179,7 +182,7 @@ in the tutorial and can be explored by the interested reader/user.
 # Appendix: The VAE module
 
 The structure of the VAE is reported using
-```{r lkmod2, eval=TRUE}
+```{r lkmod2, eval=FALSE}
 vae$module
 ```
 

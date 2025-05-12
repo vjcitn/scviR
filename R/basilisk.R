@@ -1,14 +1,66 @@
+
+
+thevers = c(
+"rope==1.13.0",
+"scvi-tools==1.3.0",
+"session_info==1.0.1",
+"anndata==0.11.4",
+#"attr==25.3.0",
+"chex==0.1.89",
+#"dateutil==2.9.0.post0",
+#"docrep==0.3.2",
+#"etils==1.12.2",
+#"filelock==3.18.0",
+#"flax==0.10.4",
+#"fsspec==2025.3.2",
+"h5py==3.13.0",
+"jax==0.4.35",
+"jaxlib==0.4.35",
+"joblib==1.4.2",
+"lightning==2.5.1.post0",
+"lightning_utilities==0.14.3",
+"llvmlite==0.44.0",
+"ml_collections==1.1.0",
+"ml_dtypes==0.5.1",
+#"mpmath==1.3.0",
+"msgpack==1.1.0",
+"mudata==0.3.1",
+"multipledispatch==0.6.0",
+"muon==0.1.7",
+"natsort==8.4.0",
+"networkx==3.4.2",
+"numba==0.61.2",
+"numpy==2.2.5",
+"numpyro==0.18.0",
+"opt_einsum==3.4.0",
+"optax==0.2.4",
+"packaging==24.2",
+"pandas==2.2.3",
+"pygments==2.19.1",
+#"pyro==1.9.1",
+"pytz==2025.2",
+"scipy==1.15.2",
+"six==1.17.0",
+#"sklearn==1.6.1",
+"sparse==0.16.0",
+"sympy==1.13.1",
+"threadpoolctl==3.6.0",
+"toolz==1.0.0",
+"torch==2.6.0",
+"torchmetrics==1.7.1",
+"tqdm==4.67.1",
+"xarray==2025.4.0",
+"scikit-misc==0.5.1",
+"leidenalg==0.10.2",
+"igraph==0.11.8"
+#"yaml==6.0.2"
+)
+
 # necessary for python module control
 #' python declarations
 #' @import basilisk
 bsklenv <- basilisk::BasiliskEnvironment(
   envname = "bsklenv",
   pkgname = "scviR",
-  packages = c("numpy==1.24.4", "pandas==1.5.3"),
-  pip = c(
-    "scvi-tools==1.0.3", "scanpy==1.9.5",
-    "matplotlib==3.7.3"
-  )
-)
-
-# dropping scikit-misc on 18 Feb because it can't be used on M1 mac
+  packages = c("pandas==2.2.3", "python==3.10"),
+  pip = thevers )
