@@ -34,16 +34,8 @@ Several points should be kept in mind when using this package:
 - scvi-tools components develop rapidly; we are
 using [basilisk](https://bioconductor.org/packages/basilisk)
 to manage R/python interoperation, and as of current
-writing we work with version 0.20.0 of scvi-tools.  Specific
+writing we work with version 1.3.0 of scvi-tools.  Specific
 versions of python components are enumerated in the file R/basilisk.R.
-- A docker container based on a PyTorch-oriented image in
-the [NVIDIA container registry](nvcr.io/nvidia/pytorch:22.12-py3) includes
-R 4.2.2 and sufficient python 3 infrastructure to use scvi-tools 0.20.0
-and scviR 0.0.2.  A Dockerfile is in scviR/inst/Docker;
-`vjcitn/nvidpt_bioc:0.0.2` can be pulled from dockerhub, it reports
-size 26.5GB.  Container resources will be updated as needed.  Users
-should file issues at the package GitHub [repo](https://github.com/vjcitn/scviR)
-if the container is stale.
 - Code presented in the cite-seq tutorial
 vignette follows [the colab notebook
 for scvi-tools 0.18.0](https://colab.research.google.com/github/scverse/scvi-tutorials/blob/0.18.0/totalVI.ipynb).  *We will check for modifications in the scvi-tools 0.20.0 notebook*.
@@ -53,7 +45,7 @@ single-cell domain.
 
 # Installation and use
 
-As of Feb 2023, use BiocManager to install scviR in R 4.2.2 or above:
+As of May 2025, use BiocManager to install scviR in R 4.5.0 or above:
 ```
 BiocManager::install("vjcitn/scviR")
 ```
@@ -63,7 +55,6 @@ functions
 
 - `getCh12AllSce()` (74 MB will be retrieved and cached)
 - `getCh12Sce()` (58 MB will be retrieved and cached)
-- `getCiteseqTutvae()` (1.2 GB will be retrieved and cached)
 - `getTotalVINormalized5k10k()` (191 MB will be retrieved and cached)
 
 

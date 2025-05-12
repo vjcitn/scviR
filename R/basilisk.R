@@ -3,7 +3,7 @@
 thevers = c(
 "rope==1.13.0",
 "scvi-tools==1.3.0",
-"session_info==v1.0.1",
+"session_info==1.0.1",
 "anndata==0.11.4",
 #"attr==25.3.0",
 "chex==0.1.89",
@@ -62,5 +62,5 @@ thevers = c(
 bsklenv <- basilisk::BasiliskEnvironment(
   envname = "bsklenv",
   pkgname = "scviR",
-  packages = "pandas==2.2.3",
+  packages = c("pandas==2.2.3", "python==3.10"),
   pip = thevers )
