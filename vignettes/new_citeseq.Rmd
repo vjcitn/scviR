@@ -38,7 +38,7 @@ will be established.
 
 # Acquire CITE-seq data from 10x human discovery platform (15k cells, 349 proteins)
 
-```{r doe44}
+```{r doe44,message=FALSE}
 library(scviR)
 HDP.h5 = cacheCiteseqHDPdata()
 mdata1 = muonR()$read_10x_h5(HDP.h5)
