@@ -15,5 +15,5 @@ basic interface to anndata
 \examples{
 ad <- anndataR()
 ad
-ad$read
+ad$read_h5ad
 }

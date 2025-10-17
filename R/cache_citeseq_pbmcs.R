@@ -61,7 +61,7 @@ cacheCiteseq5k10kPbmcs <- function() {
 #' scvi <- scviR()
 #' adm <- anndataR()
 #' hpath <- cacheCiteseq5k10kPbmcs()
-#' adata <- adm$read(hpath)
+#' adata <- adm$read_h5ad(hpath)
 #' mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
 #' mod
 #' }
@@ -110,7 +110,7 @@ getCiteseqTutvae <- function(use_gpu = FALSE) {
   scvi <- scviR()
   adm <- anndataR()
   hpath <- cacheCiteseq5k10kPbmcs()
-  adata <- adm$read(hpath)
+  adata <- adm$read_h5ad(hpath)
   mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = use_gpu)
   mod
 }
@@ -124,7 +124,7 @@ getCiteseqTutvae <- function(use_gpu = FALSE) {
 #' @export
 getCiteseq5k10kPbmcs <- function() {
   h5path <- cacheCiteseq5k10kPbmcs()
-  anndataR()$read(h5path)
+  anndataR()$read_h5ad(h5path)
 }
 
 .osn_bucket_to_cache <- function(
@@ -155,7 +155,7 @@ getCiteseq5k10kPbmcs <- function() {
 #' @export
 getPro5k10kAdata <- function() {
   ans <- .osn_bucket_to_cache("pbmc5k10k_pro_adata.h5ad")
-  anndataR()$read(ans)
+  anndataR()$read_h5ad(ans)
 }
 
 #' get matrices of normalized quantifications from full totalVI 5k10k from tutorial
@@ -178,7 +178,7 @@ getTotalVINormalized5k10k <- function() {
 #' @export
 getTotalVI5k10kAdata <- function() {
   ans <- .osn_bucket_to_cache("full_5k10k_totalVI.h5ad")
-  anndataR()$read(ans)
+  anndataR()$read_h5ad(ans)
 }
 
 #' get SCE for 10k PBMC annotated as in OSCA book chapter 12
