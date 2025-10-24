@@ -2,7 +2,7 @@
 % Please edit documentation in R/cache_citeseq_pbmcs.R
 \name{cacheCiteseq5k10kTutvae}
 \alias{cacheCiteseq5k10kTutvae}
-\title{grab scvi-tools VAE instance built on the PBMC datasets following the tutorial}
+\title{Deprecated: grab scvi-tools VAE instance built on the PBMC datasets following the tutorial}
 \usage{
 cacheCiteseq5k10kTutvae()
 }
@@ -10,9 +10,11 @@ cacheCiteseq5k10kTutvae()
 invisibly, the path to the .zip file holding the fitted VAE and associated data
 }
 \description{
-grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
+Deprecated: grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
 }
 \note{
+the serialized model is obsolete
+
 VAE construction followed tutorial at
 `https://docs.scvi-tools.org/en/stable/tutorials/notebooks/totalVI.html`.
 
@@ -20,6 +22,7 @@ It may be advantageous to set `options(timeout=3600)` or to allow an even greate
 time for internet downloads, if working at a relatively slow network connection.
 }
 \examples{
+\dontrun{
 zpath <- cacheCiteseq5k10kTutvae()
 td <- tempdir()
 utils::unzip(zpath, exdir = td)
@@ -27,7 +30,8 @@ vaedir <- paste0(td, "/vae2_ov")
 scvi <- scviR()
 adm <- anndataR()
 hpath <- cacheCiteseq5k10kPbmcs()
-adata <- adm$read(hpath)
+adata <- adm$read_h5ad(hpath)
 mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
 mod
+}
 }

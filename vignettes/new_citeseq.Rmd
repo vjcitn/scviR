@@ -38,7 +38,7 @@ will be established.
 
 # Acquire CITE-seq data from 10x human discovery platform (15k cells, 349 proteins)
 
-```{r doe44}
+```{r doe44,message=FALSE}
 library(scviR)
 HDP.h5 = cacheCiteseqHDPdata()
 mdata1 = muonR()$read_10x_h5(HDP.h5)
@@ -67,7 +67,7 @@ scr$pp$highly_variable_genes(
 Add the filtered data to the MuData instance.
 
 ```{r domu}
-py_run_string('r.mdata1.mod["rna_subset"] = r.mdata1.mod["rna"][:, r.mdata1.mod["rna"].var["highly_variable"]].copy()')
+reticulate::py_run_string('r.mdata1.mod["rna_subset"] = r.mdata1.mod["rna"][:, r.mdata1.mod["rna"].var["highly_variable"]].copy()')
 mdata1 = MuDataR()$MuData(mdata1$mod)
 ```
 
@@ -75,9 +75,9 @@ Produce dense versions of quantification matrices, and "update".
 
 
 ```{r densify}
-py_run_string('r.mdata1["prot"].X = r.mdata1["prot"].X.toarray()')
-py_run_string('r.mdata1["rna_subset"].X = r.mdata1["rna_subset"].X.toarray()')
-py_run_string('r.mdata1.mod["rna_subset"].layers["counts"] = r.mdata1.mod["rna_subset"].layers["counts"].toarray()')
+reticulate::py_run_string('r.mdata1["prot"].X = r.mdata1["prot"].X.toarray()')
+reticulate::py_run_string('r.mdata1["rna_subset"].X = r.mdata1["rna_subset"].X.toarray()')
+reticulate::py_run_string('r.mdata1.mod["rna_subset"].layers["counts"] = r.mdata1.mod["rna_subset"].layers["counts"].toarray()')
 mdata1$update()
 ```
 
@@ -128,7 +128,8 @@ acc = "cpu"
 tchk = try(reticulate::import("torch"))
 if (!inherits(tchk, "try-error") && tchk$backends$mps$is_available()) acc = "mps"
 if (!inherits(tchk, "try-error") && tchk$cuda$is_available()) acc = "gpu"
-runtim.cpu = system.time(model$train(max_epochs=n_epochs.cpu, accelerator = "cpu"))
+#runtim.cpu = system.time(model$train(max_epochs=n_epochs.cpu, accelerator = "cpu"))
+runtim.cpu = c(NA,NA,NA)
 runtim = system.time(model$train(max_epochs=n_epochs, accelerator = acc))
 ```
 
@@ -139,7 +140,7 @@ By contrast, the average epoch runtime for a very short run with CPU only is `r 
 
 Extract the ELBO criteria.  The plot below includes both the CPU and GPU (if available) results.
 ```{r lkelb}
-total_ep = n_epochs + n_epochs.cpu
+total_ep = n_epochs # + n_epochs.cpu
 val_elbo = unlist(model$history$elbo_validation) 
 tr_elbo = model$history$elbo_train$elbo_trai
 plot(1:total_ep, tr_elbo, type="l", xlab="epoch", ylab="ELBO", ylim=c(0,7000))

@@ -62,5 +62,5 @@ thevers = c(
 bsklenv <- basilisk::BasiliskEnvironment(
   envname = "bsklenv",
   pkgname = "scviR",
-  packages = "pandas==2.2.3",
+  packages = c("pandas==2.2.3", "python==3.10"),
   pip = thevers )
