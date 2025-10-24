@@ -31,15 +31,29 @@ cacheCiteseq5k10kPbmcs <- function() {
   invisible(bfcrpath(ca, sub(".gz$", "", targ), action = "copy"))
 }
 
-#' grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
+#     new: character string: A suggestion for a replacement function.
+#
+# package: character string: The package to be used when suggesting
+#          where the deprecated function might be listed.
+#
+#     msg: character string: A message to be printed, if missing a
+#          default message is used.
+#
+#     old: character string specifying the function (default) or usage
+#          which is being deprecated.
+
+
+#' Deprecated: grab scvi-tools VAE instance built on the PBMC datasets following the tutorial
 #' @import BiocFileCache
 #' @importFrom utils unzip
+#' @note the serialized model is obsolete
 #' @note VAE construction followed tutorial at
 #' `https://docs.scvi-tools.org/en/stable/tutorials/notebooks/totalVI.html`.
 #' @note It may be advantageous to set `options(timeout=3600)` or to allow an even greater
 #' time for internet downloads, if working at a relatively slow network connection.
 #' @return invisibly, the path to the .zip file holding the fitted VAE and associated data
 #' @examples
+#' \dontrun{
 #' zpath <- cacheCiteseq5k10kTutvae()
 #' td <- tempdir()
 #' utils::unzip(zpath, exdir = td)
@@ -47,11 +61,14 @@ cacheCiteseq5k10kPbmcs <- function() {
 #' scvi <- scviR()
 #' adm <- anndataR()
 #' hpath <- cacheCiteseq5k10kPbmcs()
-#' adata <- adm$read(hpath)
+#' adata <- adm$read_h5ad(hpath)
 #' mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
 #' mod
+#' }
 #' @export
 cacheCiteseq5k10kTutvae <- function() {
+.Deprecated(new="cacheCiteseqHDPmodel", package="scviR",
+   msg="the serialized model is obsolete", old="cacheCiteseq5k10kTutvae")
   ca <- BiocFileCache()
   pa <- bfcquery(ca, "vae2_ov.zip")
   # returns tibble
@@ -81,7 +98,9 @@ cacheCiteseq5k10kTutvae <- function() {
 #' @return python reference to anndata
 #' @note March 2024 use_gpu ignored
 #' @examples
+#' \dontrun{
 #' getCiteseqTutvae()
+#' }
 #' @export
 getCiteseqTutvae <- function(use_gpu = FALSE) {
   zpath <- cacheCiteseq5k10kTutvae()
@@ -91,7 +110,7 @@ getCiteseqTutvae <- function(use_gpu = FALSE) {
   scvi <- scviR()
   adm <- anndataR()
   hpath <- cacheCiteseq5k10kPbmcs()
-  adata <- adm$read(hpath)
+  adata <- adm$read_h5ad(hpath)
   mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = use_gpu)
   mod
 }
@@ -105,7 +124,7 @@ getCiteseqTutvae <- function(use_gpu = FALSE) {
 #' @export
 getCiteseq5k10kPbmcs <- function() {
   h5path <- cacheCiteseq5k10kPbmcs()
-  anndataR()$read(h5path)
+  anndataR()$read_h5ad(h5path)
 }
 
 .osn_bucket_to_cache <- function(
@@ -136,7 +155,7 @@ getCiteseq5k10kPbmcs <- function() {
 #' @export
 getPro5k10kAdata <- function() {
   ans <- .osn_bucket_to_cache("pbmc5k10k_pro_adata.h5ad")
-  anndataR()$read(ans)
+  anndataR()$read_h5ad(ans)
 }
 
 #' get matrices of normalized quantifications from full totalVI 5k10k from tutorial
@@ -159,7 +178,7 @@ getTotalVINormalized5k10k <- function() {
 #' @export
 getTotalVI5k10kAdata <- function() {
   ans <- .osn_bucket_to_cache("full_5k10k_totalVI.h5ad")
-  anndataR()$read(ans)
+  anndataR()$read_h5ad(ans)
 }
 
 #' get SCE for 10k PBMC annotated as in OSCA book chapter 12
