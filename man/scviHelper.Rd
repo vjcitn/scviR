@@ -12,3 +12,8 @@ shinyApp instance
 \description{
 shiny app that helps access documentation on python-accessible components
 }
+\examples{
+if (interactive()) {
+  scviHelper()
+}
+}

@@ -12,6 +12,7 @@ scanpyR <- function() {
 #  basilisk::basiliskRun(proc, function() {
 #    reticulate::import("scanpy")
 #  })
+reticulate::py_require("numpy<2.5")
 reticulate::py_require("scanpy")
 reticulate::py_require("scikit-misc")
 reticulate::import("skmisc") # but only implicitly used ...
@@ -32,6 +33,7 @@ anndataR <- function() {
 #  basilisk::basiliskRun(proc, function() {
 #    reticulate::import("anndata")
 #  })
+reticulate::py_require("numpy<2.5")
 reticulate::py_require("anndata")
 reticulate::import("anndata")
 }
@@ -49,6 +51,7 @@ MuDataR <- function() {
 #  basilisk::basiliskRun(proc, function() {
 #    reticulate::import("mudata")
 #  })
+reticulate::py_require("numpy<2.5")
 reticulate::py_require("mudata")
 reticulate::import("mudata")
 }
@@ -66,6 +69,7 @@ muonR <- function() {
 #  basilisk::basiliskRun(proc, function() {
 #    reticulate::import("muon")
 #  })
+reticulate::py_require("numpy<2.5")
 reticulate::py_require("muon")
 reticulate::import("muon")
 }

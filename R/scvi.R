@@ -17,6 +17,7 @@ scviR <- function() {
 ##pandas.core.indexes.base.Int64Index = pandas.core.indexes.base.Index")
 #  reticulate::import("scvi")
 #  })
+reticulate::py_require("numpy<2.5")
 reticulate::py_require("scvi-tools")
 reticulate::import("scvi")
 }

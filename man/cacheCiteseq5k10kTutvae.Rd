@@ -22,16 +22,16 @@ It may be advantageous to set `options(timeout=3600)` or to allow an even greate
 time for internet downloads, if working at a relatively slow network connection.
 }
 \examples{
-\dontrun{
-zpath <- cacheCiteseq5k10kTutvae()
-td <- tempdir()
-utils::unzip(zpath, exdir = td)
-vaedir <- paste0(td, "/vae2_ov")
-scvi <- scviR()
-adm <- anndataR()
-hpath <- cacheCiteseq5k10kPbmcs()
-adata <- adm$read_h5ad(hpath)
-mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
-mod
+if (interactive()) {
+  zpath <- cacheCiteseq5k10kTutvae()
+  td <- tempdir()
+  utils::unzip(zpath, exdir = td)
+  vaedir <- paste0(td, "/vae2_ov")
+  scvi <- scviR()
+  adm <- anndataR()
+  hpath <- cacheCiteseq5k10kPbmcs()
+  adata <- adm$read_h5ad(hpath)
+  mod <- scvi$model$`_totalvi`$TOTALVI$load(vaedir, adata) #, use_gpu = FALSE)
+  mod
 }
 }
