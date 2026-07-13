@@ -67,7 +67,7 @@ scr$pp$highly_variable_genes(
 Add the filtered data to the MuData instance.
 
 ```{r domu}
-py_run_string('r.mdata1.mod["rna_subset"] = r.mdata1.mod["rna"][:, r.mdata1.mod["rna"].var["highly_variable"]].copy()')
+reticulate::py_run_string('r.mdata1.mod["rna_subset"] = r.mdata1.mod["rna"][:, r.mdata1.mod["rna"].var["highly_variable"]].copy()')
 mdata1 = MuDataR()$MuData(mdata1$mod)
 ```
 
@@ -75,9 +75,9 @@ Produce dense versions of quantification matrices, and "update".
 
 
 ```{r densify}
-py_run_string('r.mdata1["prot"].X = r.mdata1["prot"].X.toarray()')
-py_run_string('r.mdata1["rna_subset"].X = r.mdata1["rna_subset"].X.toarray()')
-py_run_string('r.mdata1.mod["rna_subset"].layers["counts"] = r.mdata1.mod["rna_subset"].layers["counts"].toarray()')
+reticulate::py_run_string('r.mdata1["prot"].X = r.mdata1["prot"].X.toarray()')
+reticulate::py_run_string('r.mdata1["rna_subset"].X = r.mdata1["rna_subset"].X.toarray()')
+reticulate::py_run_string('r.mdata1.mod["rna_subset"].layers["counts"] = r.mdata1.mod["rna_subset"].layers["counts"].toarray()')
 mdata1$update()
 ```
 
@@ -123,19 +123,28 @@ Use `model$module` to see the complete architecture.
 Perform truncated training:
 ```{r dotrain, message=FALSE, results="hide"}
 n_epochs = 50L
+n_epochs.cpu = 5L
 acc = "cpu"
 tchk = try(reticulate::import("torch"))
 if (!inherits(tchk, "try-error") && tchk$backends$mps$is_available()) acc = "mps"
-if (!inherits(tchk, "try-error") && tchk$backends$cuda$is_built()) acc = "gpu"
-model$train(max_epochs=n_epochs, accelerator = acc)
+if (!inherits(tchk, "try-error") && tchk$cuda$is_available()) acc = "gpu"
+#runtim.cpu = system.time(model$train(max_epochs=n_epochs.cpu, accelerator = "cpu"))
+runtim.cpu = c(NA,NA,NA)
+runtim = system.time(model$train(max_epochs=n_epochs, accelerator = acc))
 ```
 
-Extract the ELBO criteria.
+The `r acc` processor was used leading to an average clock time per epoch of `r round(runtim[3]/n_epochs,2)`
+seconds.
+
+By contrast, the average epoch runtime for a very short run with CPU only is `r round(runtim.cpu[3]/n_epochs.cpu,2)`.
+
+Extract the ELBO criteria.  The plot below includes both the CPU and GPU (if available) results.
 ```{r lkelb}
+total_ep = n_epochs # + n_epochs.cpu
 val_elbo = unlist(model$history$elbo_validation) 
 tr_elbo = model$history$elbo_train$elbo_trai
-plot(1:n_epochs, tr_elbo, type="l", xlab="epoch", ylab="ELBO", ylim=c(0,7000))
-lines(1:n_epochs, val_elbo, col="blue")
+plot(1:total_ep, tr_elbo, type="l", xlab="epoch", ylab="ELBO", ylim=c(0,7000))
+lines(1:total_ep, val_elbo, col="blue")
 legend(3, 6000, col=c("black", "blue"), lty=1, legend=c("train", "validate"))
 ```
 

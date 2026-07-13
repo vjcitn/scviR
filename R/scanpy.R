@@ -7,11 +7,16 @@
 #' sc$pp
 #' @export
 scanpyR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
-  on.exit(basilisk::basiliskStop(proc))
-  basilisk::basiliskRun(proc, function() {
-    reticulate::import("scanpy")
-  })
+#  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
+#  on.exit(basilisk::basiliskStop(proc))
+#  basilisk::basiliskRun(proc, function() {
+#    reticulate::import("scanpy")
+#  })
+reticulate::py_require("numpy<2.5")
+reticulate::py_require("scanpy")
+reticulate::py_require("scikit-misc")
+reticulate::import("skmisc") # but only implicitly used ...
+reticulate::import("scanpy")
 }
 
 
@@ -20,14 +25,17 @@ scanpyR <- function() {
 #' @examples
 #' ad <- anndataR()
 #' ad
-#' ad$read
+#' ad$read_h5ad
 #' @export
 anndataR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
-  on.exit(basilisk::basiliskStop(proc))
-  basilisk::basiliskRun(proc, function() {
-    reticulate::import("anndata")
-  })
+#  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
+#  on.exit(basilisk::basiliskStop(proc))
+#  basilisk::basiliskRun(proc, function() {
+#    reticulate::import("anndata")
+#  })
+reticulate::py_require("numpy<2.5")
+reticulate::py_require("anndata")
+reticulate::import("anndata")
 }
 
 #' basic interface to MuData
@@ -38,11 +46,14 @@ anndataR <- function() {
 #' head(names(md))
 #' @export
 MuDataR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
-  on.exit(basilisk::basiliskStop(proc))
-  basilisk::basiliskRun(proc, function() {
-    reticulate::import("mudata")
-  })
+#  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
+#  on.exit(basilisk::basiliskStop(proc))
+#  basilisk::basiliskRun(proc, function() {
+#    reticulate::import("mudata")
+#  })
+reticulate::py_require("numpy<2.5")
+reticulate::py_require("mudata")
+reticulate::import("mudata")
 }
 
 #' basic interface to muon
@@ -53,9 +64,12 @@ MuDataR <- function() {
 #' head(names(md))
 #' @export
 muonR <- function() {
-  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
-  on.exit(basilisk::basiliskStop(proc))
-  basilisk::basiliskRun(proc, function() {
-    reticulate::import("muon")
-  })
+#  proc <- basilisk::basiliskStart(bsklenv, testload="anndata")
+#  on.exit(basilisk::basiliskStop(proc))
+#  basilisk::basiliskRun(proc, function() {
+#    reticulate::import("muon")
+#  })
+reticulate::py_require("numpy<2.5")
+reticulate::py_require("muon")
+reticulate::import("muon")
 }

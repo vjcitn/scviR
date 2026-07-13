@@ -15,3 +15,11 @@ character vector of lines from python help result
 \description{
 helper to get text from python help utility -- may need handling through basilisk
 }
+\examples{
+if (interactive() || reticulate::py_available()) {
+  try({
+    res <- pyHelp2(reticulate::import("os"))
+    head(res)
+  }, silent = TRUE)
+}
+}

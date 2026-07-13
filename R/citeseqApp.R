@@ -55,13 +55,11 @@ getSubclusteringFeatures <- function(inlist, clname, n = 20) {
 #' @note TSNE should already be available in `altExp(sce)`; follow OSCA book 12.5.2.  If using
 #' example, set `ask=FALSE`.
 #' @examples
-#' \donttest{
 #' if (interactive()) {
-#' sce <- getCh12Sce()
-#' all.sce <- getCh12AllSce()
-#' data(clusters.adt)
-#' runApp(exploreSubcl(sce, all.sce, clusters.adt)) # trips up interactive pkgdown?)
-#' }
+#'   sce <- getCh12Sce()
+#'   all.sce <- getCh12AllSce()
+#'   data(clusters.adt)
+#'   runApp(exploreSubcl(sce, all.sce, clusters.adt)) # trips up interactive pkgdown?)
 #' }
 #' @export
 exploreSubcl <- function(sce, inlist, adtcls) {
